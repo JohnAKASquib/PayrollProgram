@@ -7,13 +7,14 @@ public class LoginScreen {
 
     LoginScreen() {
         f = new JFrame();
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JButton empLogin = new JButton("Employee Login");
         empLogin.setBounds(50, 200, 120, 30);
         JButton hrLogin = new JButton("HR Login");
         hrLogin.setBounds(220, 200, 120, 30);
         JTextField userID = new JTextField();
         userID.setBounds(150, 100, 200, 30);
-        JTextField passphrase = new JTextField();
+        JPasswordField passphrase = new JPasswordField();
         passphrase.setBounds(150, 150, 200, 30);
         JLabel username = new JLabel("ID Number:");
         username.setBounds(50, 100, 70, 15);
