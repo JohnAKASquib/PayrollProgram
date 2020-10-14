@@ -2,33 +2,63 @@ package GUI;
 
 import javax.swing.*;
 
-public class LoginScreen {
+public class LoginScreen extends JFrame {
     JFrame f;
+    JButton empLogin, hrLogin;
+    JTextField userID;
+    JPasswordField passphrase;
+    JLabel username, password;
 
-    LoginScreen() {
-        f = new JFrame();
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JButton empLogin = new JButton("Employee Login");
-        empLogin.setBounds(50, 200, 120, 30);
-        JButton hrLogin = new JButton("HR Login");
-        hrLogin.setBounds(220, 200, 120, 30);
-        JTextField userID = new JTextField();
-        userID.setBounds(150, 100, 200, 30);
-        JPasswordField passphrase = new JPasswordField();
-        passphrase.setBounds(150, 150, 200, 30);
-        JLabel username = new JLabel("ID Number:");
+    public LoginScreen() {
+        setupFrame();
+        setupLabels();
+        setupTextFields();
+        setupButtons();
+        addToFrame();
+        setLayout(null);
+        setVisible(true);
+    }
+
+    public void setupFrame() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void setupLabels() {
+        username = new JLabel("ID Number:");
+        password = new JLabel("Password:");
         username.setBounds(50, 100, 70, 15);
-        JLabel password = new JLabel("Password:");
         password.setBounds(50, 150, 70, 15);
-        f.add(username);
-        f.add(userID);
-        f.add(password);
-        f.add(passphrase);
-        f.add(empLogin);
-        f.add(hrLogin);
-        f.setSize(500, 325);
-        f.setLayout(null);
-        f.setVisible(true);
+    }
+
+    public void setupTextFields() {
+        userID = new JTextField();
+        passphrase = new JPasswordField();
+        userID.setBounds(150, 100, 200, 30);
+        passphrase.setBounds(150, 150, 200, 30);
+    }
+
+    public void setupButtons() {
+        empLogin = new JButton("Employee Login");
+        hrLogin = new JButton("HR Login");
+        empLogin.setBounds(50, 200, 120, 30);
+        hrLogin.setBounds(220, 200, 120, 30);
+    }
+
+    public void addToFrame() {
+        add(username);
+        add(userID);
+        add(password);
+        add(passphrase);
+        add(empLogin);
+        add(hrLogin);
+    }
+
+    public JButton getHRLogin() {
+        return this.hrLogin;
+    }
+
+    public JButton getEMPLogin() {
+        return this.empLogin;
     }
 
     public static void main(String[] args) {

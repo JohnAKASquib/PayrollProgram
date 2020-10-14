@@ -15,7 +15,7 @@ public class HRScreen extends JFrame implements ActionListener {
 	JTextField firstname, lastname, socialsec, address, DOB, homeNo, mobileNo, emailAddress, dateStarted, IDNumber,
 			hoursWorkedLastPayPeriod;
 
-	HRScreen() {
+	public HRScreen() {
 		super("Payroll Program");
 		setupFrame();
 		setupPanels();
