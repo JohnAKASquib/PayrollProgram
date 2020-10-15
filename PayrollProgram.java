@@ -1,6 +1,5 @@
 import GUI.*;
 import java.awt.event.*;
-import javax.swing.*;
 
 public class PayrollProgram implements ActionListener {
     HRScreen screen;
@@ -20,6 +19,7 @@ public class PayrollProgram implements ActionListener {
 
     public void addActionListeners() {
         logscreen.getHRLogin().addActionListener(this);
+        screen.getLogout().addActionListener(this);
         // logscreen.getEMPLogin().addActionListener(this);
     }
 
@@ -28,6 +28,9 @@ public class PayrollProgram implements ActionListener {
         if (source == logscreen.getHRLogin()) {
             screen.setVisible(true);
             logscreen.setVisible(false);
+        } else if (source == screen.getLogout()) {
+            logscreen.setVisible(true);
+            screen.setVisible(false);
         }
     }
 
