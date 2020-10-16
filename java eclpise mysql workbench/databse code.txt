@@ -1,3 +1,5 @@
+The database name : newdb
+---------------------------------------
 CREATE TABLE `emloyee` (
   `IDNumber` int NOT NULL,
   `firstName` varchar(45) NOT NULL,
