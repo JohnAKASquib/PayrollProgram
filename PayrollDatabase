@@ -1,0 +1,119 @@
+package abc1;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+public class pc1 {
+	static Connection connection=null;
+	static String databaseName="newdb";
+	static String user="root";
+	static String pass="root";
+	public static void main (String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{ 
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+		connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/newdb?useSSL=false",user,pass);
+		
+		//---------------------------------Table of "emloyee"----------------------
+		//--------------------------These the input to test for MySQL workbench
+		int IDNumber1=210, SSNumber1=222883398, hoursWorkedLastPayPeriod1=10;
+		String firstName1="xxxx", lastName1="aaaa", Address1="2138 dhjsdf", homePhoneNumber1="34828992", MobilePhoneNumber1="23415123", emailAddress1="234@outlook.com", fullTime1="yes";
+		String dateOfBirth1="1932/23/2";
+		String emlopyeeSince1="23/23/1111",Field1= "tastmananger";
+		//----------------------------test input end here--------------------------
+		//connecting to table of emloyee and it accept 13 value 
+		String query= " insert into emloyee (IDNumber, firstName, lastName, SSNumber, Address, dateOfBirth, homePhoneNumber, MobilePhoneNumber, emailAddress,employedSince, hoursWorkedLastPayPeriod, fullTime, Field1)"+ " values (?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,?)";
+		PreparedStatement ps= connection.prepareStatement(query);	
+		ps.setInt (1, IDNumber1);//accept IDnumber 1 for emlopyee table
+		ps.setString(2, firstName1); //accpet firstName for emlopyee table
+		ps.setString(3, lastName1);//accept lastname for emlopyee table
+		ps.setInt(4, SSNumber1);//accept SSNumber for emlopyee table
+		ps.setString(5, Address1);// accept Addres for emlopyee table
+		ps.setString(6,dateOfBirth1);// accept dateofbirth for emlopyee table
+		ps.setString(7,homePhoneNumber1);// accept homephonenumber for emlopyee table
+		ps.setString(8, MobilePhoneNumber1);// accept mobilphonenumber for emlopyee table
+		ps.setString(9,emailAddress1);// accept emailaddress for emlopyee table
+		ps.setString(10, emlopyeeSince1);//accept emlopyeeSince for emlopyee table
+		ps.setInt(11, hoursWorkedLastPayPeriod1);// accept hourworkedlastpayperiod for emlopyee table
+		ps.setString(12, fullTime1); //accept fulltime for emlopyee table
+		ps.setString(13, Field1);// accept Field for emlopyee table
+		int status= ps.executeUpdate();//this testing if the value is connect or inserted.
+		if (status !=0){
+			System.out.println("emloyee Database connected");
+			System.out.println("emloyee record was inseted");
+		}
+		//end of testing status for database connection 
+		//----------------------------------end of table--------------------------------
+		//----------------------------------table of HR-------------------------------
+		int IDNumber2=531, numEmployee2=1;//These the input to test for MySQL workbench
+		String password2="232323";
+		//end testing value for database
+		//connecting to table of HR and it accept 3 value 
+		String query2= " insert into hr (IDNumber, password, numEmployee)"+ " values (? ,? ,?)";
+		PreparedStatement ps2= connection.prepareStatement(query2);
+		ps2.setInt(1, IDNumber2); //<--------this is the input value of IDNumber  in table HR
+		ps2.setString(2,password2);//<-------this is the input value of Password in table HR
+		ps2.setInt(3,numEmployee2);//<--------<-------this is the input value of numEmployee in table HR
+		int status2= ps2.executeUpdate();//<-------this is test the status of the value 
+		if (status2 !=0){
+			System.out.println("HR Database connected");
+			System.out.println("HR record was inseted");
+		}
+		//end of testing connection of database
+		//--------------------------------end of table-----------------------------------
+		//--------------------------------Table of Benefit---------------------------------
+		int BenefitID3=623,amountGiven3= 6;//testing value for insert value for database table Benefit
+		String Name3="dfs", AmountRespondsibleFor3="daa", includesFamily3="d1ff";
+		//end of testing value 
+		//connecting to table of benefit and it accept 5 value 
+		String query3= " insert into benefit (BenefitID, Name, AmountResponsibleFor, amountGiven, includesFamily)"+ " values (? ,? ,?, ?, ?)";
+		PreparedStatement ps3= connection.prepareStatement(query3); 
+		ps3.setInt(1, BenefitID3);// accept BenefitID for table benefit
+		ps3.setString(2, Name3);// accept name for table benefit
+		ps3.setString(3, AmountRespondsibleFor3);// accept AmountRespondsibleFor for table benefit
+		ps3.setInt(4,amountGiven3);// accept amountGiven for table benefit
+		ps3.setString(5, includesFamily3);// accept includesfamily for table benefit
+		int status3= ps3.executeUpdate();//testing the status of the connection
+		if (status3 !=0){
+			System.out.println("Benefit Database connected");
+			System.out.println("Benefit record was inseted");
+		}
+		//end of testing
+		//--------------------------------end of table---------------------------------------------
+		//--------------------------------Table of Bronzepackage-----------------------------------
+		int BenefitID4=20;//These the input to test for MySQL workbench
+		String query4= " insert into bronzepackage (BenefitsID)"+ " values (?)";//connecting to table of Bronzepackage and it accept 1 value 
+		//end of testing value
+		PreparedStatement ps4= connection.prepareStatement(query4); 
+		ps4.setInt(1, BenefitID4);//accept BendefitID
+		int status4= ps4.executeUpdate();//testing the connection to database
+		if (status4 !=0){
+			System.out.println("BP Database connected");
+			System.out.println("BP record was inseted");
+		}
+		//end of testing
+		//---------------------------------end of table----------------------------------------------
+		//---------------------------------table of silverPackage------------------------------------
+		int BenefitID5=20;//These the input to test for MySQL workbench
+		//end of testing value
+		String query5= " insert into silverPackage (BenefitsID)"+ " values (?)";//connecting to table of Siverpackage and it accept 1 value
+		PreparedStatement ps5= connection.prepareStatement(query5); 
+		ps5.setInt(1, BenefitID5);//accept BenfitID for table of silverPackage
+		int status5= ps5.executeUpdate();//testing the insert for database
+		if (status5 !=0){
+			System.out.println("SP Database connected");
+			System.out.println("SP record was inseted");
+		}//end of testing 
+		//---------------------------------end of table------------------------------------------------
+		//---------------------------------table of goldPackage---------------------------------------
+		int BenefitID6=20;//These the input to test for MySQL workbench
+		//end of testing
+		String query6= " insert into goldPackage (BenefitsID)"+ " values (?)";//connecting to table goldpackage and it accept 1 value
+		PreparedStatement ps6= connection.prepareStatement(query6); 
+		ps6.setInt(1, BenefitID6);//accept benfitId value
+		int status6= ps6.executeUpdate();//testing for value accept or not
+		if (status6 !=0){
+			System.out.println("GP Database connected");
+			System.out.println("GP record was inseted");
+		}//end of testing 
+		//---------------------------------end of table-------------------------------------
+	}
+}
