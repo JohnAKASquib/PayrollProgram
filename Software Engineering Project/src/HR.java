@@ -12,7 +12,6 @@ public class HR {
 	public static void main(String[] args) {
 		
 		
-		
 	}
 	
 	
@@ -147,7 +146,11 @@ public class HR {
 		
 	}
 		
-		
+	
+	
+    public void changeBenefitsPackageNumber(Employee employee, int benefitsPackageNumber) {
+    	employee.benefitsPackageNumber = benefitsPackageNumber;
+    }
 	
 		
 	public static void changeHoursWorkedLastPayPeriod(Employee employee, int hoursWorkedLastPayPeriod) {
@@ -165,45 +168,6 @@ public class HR {
 	
 	
 	
-	public static void addBenefitBronze(Benefit benefit) {
-		BenefitsPackage.numBenefitsBronze++;
-		BenefitsPackage.benefitsBronze[index] = benefit;
-		index++;
-		
-		
-	}
-		
-		
-	
-	
-	
-	
-	
-	
-	
-	public static void addBenefitSilver(Benefit benefit) {
-			BenefitsPackage.numBenefitsSilver++;
-			BenefitsPackage.benefitsSilver[index] = benefit;
-			index++;
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public static void addBenefitGold(Benefit benefit) {
-		BenefitsPackage.numBenefitsGold++;
-		BenefitsPackage.benefitsGold[index] = benefit;
-		index++;
-		
-	
-	
-	}
 	
 	
 	

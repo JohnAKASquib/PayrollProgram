@@ -18,6 +18,11 @@ public class Employee {
 		boolean fullTime;
 		
 		
+		public static void main(String[] args) {
+			
+		}
+		
+		
 		
 		public Employee() {
 			

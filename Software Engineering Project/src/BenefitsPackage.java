@@ -1,19 +1,31 @@
 
-public class BenefitsPackage {
+abstract public class BenefitsPackage {
 	
 	
-	public static int numBenefitsBronze = 15;
-	public static int numBenefitsSilver = 20;
-	public static int numBenefitsGold = 30;
 	
-	public int ID;
 	
-	Benefit dentalCare = new Benefit("Dental Care", 70, 30, true);
+	int ID;
 	
-	public static Benefit [] benefitsBronze = new Benefit[numBenefitsBronze];
-	public static Benefit [] benefitsSilver = new Benefit[numBenefitsSilver];
-	public static Benefit [] benefitsGold = new Benefit[numBenefitsGold];
 	
+	static Benefit healthInsurance = new Benefit("Health Insurance", 70, 30, true);
+	static Benefit lifeInsurance = new Benefit("Life Insurance", 70, 30, true);
+	static Benefit homeInsurance = new Benefit("Home Insurance", 70, 30, true);
+	static Benefit legalInsurance = new Benefit("Legal Insurance", 70, 30, true);
+	static Benefit disabilityProtection = new Benefit("Disability Protection", 70, 30, true);
+	static Benefit daycare = new Benefit("Daycare", 70, 30, true);
+	static Benefit paternalLeave = new Benefit("Paternal Leave", 70, 30, true);
+	static Benefit education = new Benefit("Education", 70, 30, true);
+	static Benefit transportation = new Benefit("Transportation", 70, 30, true);
+	static Benefit housing = new Benefit("Housing", 70, 30, true);
+	static Benefit paidVacation = new Benefit("Paid Vacation", 70, 30, true);
+	static Benefit dentalCare = new Benefit("Dental Care", 70, 30, true);
+	static Benefit visionCare  = new Benefit("Vision Care", 70, 30, true);
+	
+	
+	public static void main(String[] args) { 
+		
+		
+	}
 	
 	
 	public BenefitsPackage() {
@@ -21,174 +33,6 @@ public class BenefitsPackage {
 	}
 	
 	
-	
-	
-	public BenefitsPackage(int numBenefitsBronze) {
-
-		this.numBenefitsBronze = numBenefitsBronze;
-		
-		
-}
-
-
-
-
-
-
-
-	public void setNumBenefitsBronze(int numBenefitsBronze) {
-		this.numBenefitsBronze = numBenefitsBronze;
-	}
-	
-	
-	
-	
-	
-	
-	public void setNumBenefitsSilver(int numBenefitsSilver) {
-		this.numBenefitsSilver = numBenefitsSilver;
-	}
-	
-	
-	
-	
-	
-	
-	public void setNumBenefitsGold(int numBenefitsGold) {
-		this.numBenefitsGold = numBenefitsGold;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-    public void setBenefitsBronze() {
-    	benefitsBronze[0] = dentalCare;
-    	//this.benefitsBronze[index] = benefit;
-	}
-
-    
-    
-    
-    
-
-    public void setBenefitsSilver(int index, Benefit benefit) {
-		this.benefitsSilver[index] = benefit;
-	}
-	
-    
-    
-    
-    
-    
-    
-    public void setBenefitsGold(int index, Benefit benefit) {
-		this.benefitsGold[index] = benefit;
-	}
-	
-    
-    
-    
-    
-    
-
-	public int getNumBenefitsBronze() {
-	    return numBenefitsBronze;
-	}
-	
-	
-	
-	
-	
-	
-	
-	public int getNumBenefitsSilver() {
-	    return numBenefitsSilver;
-	}
-	
-	
-	
-	
-	
-	
-	
-	public int getNumBenefitsGold() {
-	    return numBenefitsGold;
-	}
-	
-	
-	
-	
-	
-	
-	
-	public Benefit getBenefitsBronze(int index) {
-		return benefitsBronze[index];
-	}
-	
-	
-	
-	
-	
-	
-	public Benefit getBenefitsSilver(int index) {
-		return benefitsSilver[index];
-	}
-	
-	
-	
-	
-	
-	
-	public Benefit getBenefitsGold(int index) {
-		return benefitsGold[index];
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	public static void displayBenefitsBronze() {
-		for (int index = 0; index < benefitsBronze.length; index++)
-		(benefitsBronze[index]).print();
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public static void displayBenefitsSilver() {
-		for (int index = 0; index < benefitsSilver.length; index++)
-		(benefitsSilver[index]).print();
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	public static void displayBenefitsGold() {
-		for (int index = 0; index < benefitsGold.length; index++)
-		(benefitsGold[index]).print();
-	}
-	
-	
-	
-	
-	
-	
-	
+	abstract public void display();
 
 }

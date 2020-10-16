@@ -10,6 +10,17 @@ public class Benefit {
 	
 	
 	
+	public static void main(String[] args) { 
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
 	public Benefit() {
 		
 	}
@@ -26,7 +37,7 @@ public class Benefit {
 		this.includesFamily = includesFamily;
 		
 	}
-
+ 
 
 
 
