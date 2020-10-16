@@ -9,13 +9,13 @@ public class HRScreen extends JFrame implements ActionListener {
 	CardLayout card = new CardLayout();
 	// JFrame f;
 	JPanel left, top, center, empInfoView, empBenefitsView;
-	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, DELETE;
+	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, DELETE, logout;
 	JLabel fn, ln, ss, addr, dob, homephone, mobphone, email, employedsince, idNo, hoursworked, fulltime;
-	JLabel benefits;
+	JLabel benefits, current, choice;
 	JTextField firstname, lastname, socialsec, address, DOB, homeNo, mobileNo, emailAddress, dateStarted, IDNumber,
 			hoursWorkedLastPayPeriod;
 
-	HRScreen() {
+	public HRScreen() {
 		super("Payroll Program");
 		setupFrame();
 		setupPanels();
@@ -33,6 +33,10 @@ public class HRScreen extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
+	public JButton getLogout() {
+		return this.logout;
+	}
+
 	public void addActionListeners() {
 		empInfo.addActionListener(this);
 		empBenefits.addActionListener(this);
@@ -43,8 +47,10 @@ public class HRScreen extends JFrame implements ActionListener {
 		// as we add more panels to center, this function will need to be updated to
 		// switch between them
 		if (source == this.empInfo) {
+			choice.setText(empInfo.getText());
 			card.show(center, "Emp Info");
 		} else if (source == this.empBenefits) {
+			choice.setText(empBenefits.getText());
 			card.show(center, "Emp Benefits");
 		}
 	}
@@ -57,9 +63,8 @@ public class HRScreen extends JFrame implements ActionListener {
 	public void setupPanels() {
 		// make a border object
 		Border blackline = BorderFactory.createLineBorder(Color.BLACK, 2);
-		// give left panel a grid layout and a border
+		// give left panel a grid layout
 		left = new JPanel(new GridLayout(10, 1, 10, 5));
-		left.setBorder(blackline);
 		// give top panel a flowlayout and a border
 		top = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		top.setBorder(blackline);
@@ -80,6 +85,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		ADD = new JButton("ADD");
 		UPDATE = new JButton("UPDATE");
 		DELETE = new JButton("DELETE");
+		logout = new JButton("LOGOUT");
 	}
 
 	public void setupLabels() {
@@ -97,6 +103,9 @@ public class HRScreen extends JFrame implements ActionListener {
 		hoursworked = new JLabel("Hours Worked Last Pay Period: ");
 		fulltime = new JLabel("Full Time? (Y/N): ");
 		benefits = new JLabel("Benefits?");
+		current = new JLabel("Currently selected: ");
+		choice = new JLabel();
+		choice.setText(empInfo.getText());
 	}
 
 	public void setupTextFields() {
@@ -124,6 +133,11 @@ public class HRScreen extends JFrame implements ActionListener {
 	}
 
 	public void addToTop() {
+		// add logout button
+		top.add(logout);
+		// add labels for the user
+		top.add(current);
+		top.add(choice);
 		// add buttons to top panel
 		top.add(empInfo);
 		top.add(empBenefits);
