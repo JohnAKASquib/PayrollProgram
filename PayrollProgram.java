@@ -19,22 +19,42 @@ public class PayrollProgram implements ActionListener {
 
     public void addActionListeners() {
         logscreen.getHRLogin().addActionListener(this);
+        logscreen.getEMPLogin().addActionListener(this);
         screen.getLogout().addActionListener(this);
-        // logscreen.getEMPLogin().addActionListener(this);
     }
 
     public void actionPerformed(ActionEvent ae) {
         Object source = ae.getSource();
         if (source == logscreen.getHRLogin()) {
-            screen.setVisible(true);
-            logscreen.setVisible(false);
+            login(false);
+        } else if (source == logscreen.getEMPLogin()) {
+            login(true);
+
         } else if (source == screen.getLogout()) {
-            logscreen.setVisible(true);
-            screen.setVisible(false);
+            logout();
         }
     }
 
+    public void login(boolean employee) {
+        if (employee == true) {
+            logscreen.setVisible(false);
+            screen.setVisible(true);
+            screen.empLoggedIn();
+        }
+        else{
+            logscreen.setVisible(false);
+            screen.setVisible(true);
+        }
+    }
+
+    public void logout(){
+        logscreen.setVisible(true);
+        screen.setVisible(false);
+    }
     public static void main(String[] args) {
         new PayrollProgram();
     }
 }
+   
+
+ 

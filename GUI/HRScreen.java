@@ -216,6 +216,10 @@ public class HRScreen extends JFrame implements ActionListener {
 		benefits.setBounds(200, 50, 190, 22);
 	}
 
+	public void empLoggedIn() {
+
+	}
+
 	public static void main(String[] args) {
 		new HRScreen();
 	}
