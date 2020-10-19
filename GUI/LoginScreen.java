@@ -61,6 +61,14 @@ public class LoginScreen extends JFrame {
         return this.empLogin;
     }
 
+    public JTextField getUserField() {
+        return this.userID;
+    }
+
+    public JPasswordField getPassField() {
+        return this.passphrase;
+    }
+
     public static void main(String[] args) {
         new LoginScreen();
     }

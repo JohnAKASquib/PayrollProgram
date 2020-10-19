@@ -40,21 +40,21 @@ public class PayrollProgram implements ActionListener {
             logscreen.setVisible(false);
             screen.setVisible(true);
             screen.empLoggedIn();
-        }
-        else{
+        } else {
             logscreen.setVisible(false);
             screen.setVisible(true);
         }
+        logscreen.getUserField().setText(null);
+        logscreen.getPassField().setText(null);
     }
 
-    public void logout(){
+    public void logout() {
         logscreen.setVisible(true);
         screen.setVisible(false);
+        screen.empLoggedOut();
     }
+
     public static void main(String[] args) {
         new PayrollProgram();
     }
 }
-   
-
- 

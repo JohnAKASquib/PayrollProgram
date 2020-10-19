@@ -1,0 +1,66 @@
+The database name : newdb
+---------------------------------------
+CREATE TABLE `emloyee` (
+  `IDNumber` int NOT NULL,
+  `firstName` varchar(45) NOT NULL,
+  `lastName` varchar(45) NOT NULL,
+  `SSNumber` int NOT NULL,
+  `Address` varchar(45) NOT NULL,
+  `dateOfBirth` varchar(45) NOT NULL,
+  `homePhoneNumber` varchar(45) NOT NULL,
+  `MobilePhoneNumber` varchar(45) NOT NULL,
+  `emailAddress` varchar(255) NOT NULL,
+  `employedSince` varchar(45) NOT NULL,
+  `hoursWorkedLastPayPeriod` int NOT NULL,
+  `fullTime` varchar(45) NOT NULL,
+  `Field1` varchar(45) NOT NULL,
+  PRIMARY KEY (`IDNumber`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+-------------------------------------------------------------------------
+
+CREATE TABLE `benefit` (
+  `BenefitID` int NOT NULL,
+  `Name` varchar(45) NOT NULL,
+  `AmountResponsibleFor` varchar(45) NOT NULL,
+  `amountGiven` int NOT NULL,
+  `includesFamily` varchar(45) NOT NULL,
+  PRIMARY KEY (`BenefitID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+-----------------------------------------------------------------------------------
+
+
+CREATE TABLE `hr` (
+  `IDNumber` int NOT NULL,
+  `Password` varchar(45) NOT NULL,
+  `numEmployee` int NOT NULL,
+  PRIMARY KEY (`IDNumber`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+
+
+------------------------------------------------------------
+CREATE TABLE `silverpackage` (
+  `BenefitsID` int NOT NULL,
+  PRIMARY KEY (`BenefitsID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+
+--------------------------------------------
+
+
+CREATE TABLE `goldpackage` (
+  `BenefitsID` int NOT NULL,
+  PRIMARY KEY (`BenefitsID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+-----------------------------------------------------
+
+CREATE TABLE `bronzepackage` (
+  `BenefitsID` int NOT NULL,
+  PRIMARY KEY (`BenefitsID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
