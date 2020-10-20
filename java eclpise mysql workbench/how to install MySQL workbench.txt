@@ -1,4 +1,0 @@
-This youtube video help install MySQL workbench window/Mac
-https://youtu.be/7S_tz1z_5bA?t=594
-
-In the IDE mysql-connector-java-5.1.49-bin.jar has to be in the"Referenced Librarires" or else the import java.sql wont work.

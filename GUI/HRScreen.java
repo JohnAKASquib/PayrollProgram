@@ -7,9 +7,9 @@ import javax.swing.border.Border;
 
 public class HRScreen extends JFrame implements ActionListener {
 	CardLayout card = new CardLayout();
-	// JFrame f;
+	JCheckBox box;
 	JPanel left, top, center, empInfoView, empBenefitsView;
-	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, DELETE, logout;
+	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, VIEW, DELETE, logout;
 	JLabel fn, ln, ss, addr, dob, homephone, mobphone, email, employedsince, idNo, hoursworked, fulltime;
 	JLabel benefits, current, choice;
 	JTextField firstname, lastname, socialsec, address, DOB, homeNo, mobileNo, emailAddress, dateStarted, IDNumber,
@@ -58,6 +58,8 @@ public class HRScreen extends JFrame implements ActionListener {
 	public void setupFrame() {
 		// frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// check box will be set up here also
+		box = new JCheckBox();
 	}
 
 	public void setupPanels() {
@@ -84,6 +86,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		empNet = new JButton("Employee Net Pay");
 		ADD = new JButton("ADD");
 		UPDATE = new JButton("UPDATE");
+		VIEW = new JButton("VIEW");
 		DELETE = new JButton("DELETE");
 		logout = new JButton("LOGOUT");
 	}
@@ -150,6 +153,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		// add buttons to left panel
 		left.add(ADD);
 		left.add(UPDATE);
+		left.add(VIEW);
 		left.add(DELETE);
 	}
 
@@ -184,6 +188,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		empInfoView.add(hoursworked);
 		empInfoView.add(hoursWorkedLastPayPeriod);
 		empInfoView.add(fulltime);
+		empInfoView.add(box);// JCheckBox
 		// labels
 		fn.setBounds(200, 50, 190, 22);
 		ln.setBounds(200, 90, 190, 22);
@@ -209,11 +214,38 @@ public class HRScreen extends JFrame implements ActionListener {
 		dateStarted.setBounds(410, 370, 160, 22);
 		IDNumber.setBounds(410, 410, 160, 22);
 		hoursWorkedLastPayPeriod.setBounds(410, 450, 160, 22);
+		// check box
+		box.setBounds(410, 475, 50, 50);
 	}
 
 	public void addToEmpBenefits() {
 		empBenefitsView.add(benefits);
 		benefits.setBounds(200, 50, 190, 22);
+	}
+
+	public void empLoggedIn() {
+		firstname.setEditable(false);
+		lastname.setEditable(false);
+		socialsec.setEditable(false);
+		DOB.setEditable(false);
+		dateStarted.setEditable(false);
+		IDNumber.setEditable(false);
+		hoursWorkedLastPayPeriod.setEditable(false);
+		box.setEnabled(false);
+	}
+
+	public void empLoggedOut() {
+		if (!firstname.isEditable()) {
+			firstname.setEditable(true);
+			lastname.setEditable(true);
+			socialsec.setEditable(true);
+			DOB.setEditable(true);
+			dateStarted.setEditable(true);
+			IDNumber.setEditable(true);
+			hoursWorkedLastPayPeriod.setEditable(true);
+			box.setEnabled(true);
+		} else
+			return;
 	}
 
 	public static void main(String[] args) {
