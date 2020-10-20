@@ -4,55 +4,54 @@ public class HR {
 	
 	String IDNumber;
 	String password;
-	int numEmployees;
-	Employee[] employees = new Employee[numEmployees];
 	
 	
-    static int index = 0;
 	
-	public static void main(String[] args) {
+	
+	
+    public static void main(String[] args) {
 		
 		
 	}
 	
 	
 	
+    public HR() {
+    	
+    }
+    
+    
 	
-	
-	public void setNumEmployees(int numEmployees) {
-		this.numEmployees = numEmployees;
-	}
-	
-	
-	
-	
-	
-	
-
-
-
-
-	public void setEmployees(int index, Employee employee) {
-		this.employees[index] = employee;
+	public HR(String IDNumber, String password) {
+		this.IDNumber = IDNumber;
+		this.password = password;
 	}
 
 
 
 
+	public void setIDNumber(String iDNumber) {
+		IDNumber = iDNumber;
+	}
+	
+	
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-	public int getNumEmployees() {
-		return numEmployees;
+   
+	
+	public String getIDNumber() {
+		return IDNumber;
 	}
 
 
 
 
-
-
-	public Employee getEmployees(int index) {
-		return employees[index];
+    public String getPassword() {
+		return password;
 	}
-
 
 
 
