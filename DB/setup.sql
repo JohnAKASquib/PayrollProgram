@@ -5,7 +5,7 @@ CREATE TABLE employee (
   IDNumber int NOT NULL PRIMARY KEY,
   firstName varchar(45) NOT NULL,
   lastName varchar(45) NOT NULL,
-  SSNumber int NOT NULL,
+  SSNumber varchar(11) NOT NULL,
   Address varchar(45) NOT NULL,
   dateOfBirth varchar(45) NOT NULL,
   homePhoneNumber varchar(45),
