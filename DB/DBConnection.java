@@ -38,7 +38,7 @@ public class DBConnection {
 		return false;
 	}
 
-	public void addEmployee(Employee emp) {
+	public static Boolean addEmployee(Employee emp) {
 		try {
 			connection = DriverManager.getConnection(url, user, pass);
 			System.out.println("Connected to " + databaseName);
@@ -63,13 +63,15 @@ public class DBConnection {
 			}
 			statement.close();
 			connection.close();
+			return true;
 		} catch (SQLException e) {
-			System.out.println("Database not found!");
+			System.out.println("Database related error!");
 			e.printStackTrace();
+			return false;
 		}
 	}
 
-	public Employee retrieveEmployeeInfo(int IDNo) {
+	public static Employee retrieveEmployeeInfo(int IDNo) throws SQLException {
 		Employee temp = new Employee();
 		try {
 			connection = DriverManager.getConnection(url, user, pass);
@@ -77,7 +79,7 @@ public class DBConnection {
 			String query = "SELECT * FROM employee WHERE IDNumber=" + Integer.toString(IDNo);
 			Statement statement = connection.createStatement();
 			ResultSet res = statement.executeQuery(query);
-
+			res.next();
 			temp.setIDNumber(res.getInt(1));
 			temp.setFirstName(res.getString(2));
 			temp.setLastName(res.getString(3));
@@ -94,13 +96,14 @@ public class DBConnection {
 
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("Database not found!");
+			System.out.println("IDNumber not found!");
 			e.printStackTrace();
+			throw e;
 		}
 		return temp;
 	}
 
-	private void updateAttribute(String attr, String value, int IDNo) {
+	private static void updateAttribute(String attr, String value, int IDNo) {
 		try {
 			connection = DriverManager.getConnection(url, user, pass);
 			String sql = "UPDATE employee set " + attr + "=? WHERE IDNumber=?";
@@ -116,7 +119,7 @@ public class DBConnection {
 		}
 	}
 
-	private void updateAttribute(String attr, int value, int IDNo) {
+	private static void updateAttribute(String attr, int value, int IDNo) {
 		try {
 			connection = DriverManager.getConnection(url, user, pass);
 			String sql = "UPDATE employee set " + attr + "=? WHERE IDNumber=?";
@@ -132,7 +135,7 @@ public class DBConnection {
 		}
 	}
 
-	private void updateAttribute(String attr, Boolean value, int IDNo) {
+	private static void updateAttribute(String attr, Boolean value, int IDNo) {
 		try {
 			connection = DriverManager.getConnection(url, user, pass);
 			String sql = "UPDATE employee set " + attr + "=? WHERE IDNumber=?";
@@ -148,53 +151,67 @@ public class DBConnection {
 		}
 	}
 
-	public void updateEmployee(Employee emp) {
+	public static void updateEmployee(Employee emp, int prevID) throws SQLException {
 		try {
 			connection = DriverManager.getConnection(url, user, pass);
 			System.out.println("Connected to " + databaseName);
 			// retrieve the right info from DB
-			String query = "SELECT * FROM employee WHERE IDNumber=" + Integer.toString(emp.getIDNumber());
+			String query = "SELECT * FROM employee WHERE IDNumber=" + Integer.toString(prevID);
 			Statement statement = connection.createStatement();
 			ResultSet res = statement.executeQuery(query);
+			res.next();
 			// check each attribute to see if its different, if it is update it with a SQL
 			// command
 			if (!(emp.getFirstName() == res.getString(2))) {
 				updateAttribute("firstname", emp.getFirstName(), res.getInt(1));
-			} else if (!(emp.getLastName() == res.getString(3))) {
+			}
+			if (!(emp.getLastName() == res.getString(3))) {
 				updateAttribute("lastname", emp.getLastName(), res.getInt(1));
-			} else if (!(emp.getSSNumber() == res.getString(4))) {
+			}
+			if (!(emp.getSSNumber() == res.getString(4))) {
 				updateAttribute("SSNumber", emp.getSSNumber(), res.getInt(1));
-			} else if (!(emp.getAddress() == res.getString(5))) {
+			}
+			if (!(emp.getAddress() == res.getString(5))) {
 				updateAttribute("Address", emp.getAddress(), res.getInt(1));
-			} else if (!(emp.getDateOfBirth() == res.getString(6))) {
+			}
+			if (!(emp.getDateOfBirth() == res.getString(6))) {
 				updateAttribute("dateOfBirth", emp.getDateOfBirth(), res.getInt(1));
-			} else if (!(emp.getHomePhoneNumber() == res.getString(7))) {
+			}
+			if (!(emp.getHomePhoneNumber() == res.getString(7))) {
 				updateAttribute("homePhoneNumber", emp.getHomePhoneNumber(), res.getInt(1));
-			} else if (!(emp.getMobilePhoneNumber() == res.getString(8))) {
+			}
+			if (!(emp.getMobilePhoneNumber() == res.getString(8))) {
 				updateAttribute("MobilePhoneNumber", emp.getMobilePhoneNumber(), res.getInt(1));
-			} else if (!(emp.getEmailAddress() == res.getString(9))) {
+			}
+			if (!(emp.getEmailAddress() == res.getString(9))) {
 				updateAttribute("emailAddress", emp.getEmailAddress(), res.getInt(1));
-			} else if (!(emp.getEmployedSince() == res.getString(10))) {
+			}
+			if (!(emp.getEmployedSince() == res.getString(10))) {
 				updateAttribute("employedSince", emp.getEmployedSince(), res.getInt(1));
-			} else if (!(emp.getHoursWorkedLastPayPeriod() == res.getInt(11))) {
+			}
+			if (!(emp.getHoursWorkedLastPayPeriod() == res.getInt(11))) {
 				updateAttribute("hoursWorkedLastPayPeriod", emp.getHoursWorkedLastPayPeriod(), res.getInt(1));
-			} else if (!(emp.isFullTime() == res.getBoolean(12))) {
+			}
+			if (!(emp.isFullTime() == res.getBoolean(12))) {
 				updateAttribute("fullTime", emp.isFullTime(), res.getInt(1));
-			} else if (!(emp.getPassword() == res.getString(16))) {
+			}
+			if (!(emp.getPassword() == res.getString(16))) {
 				updateAttribute("Password", emp.getPassword(), res.getInt(1));
-			} else if (!(emp.getIDNumber() == res.getInt(1))) {
-				updateAttribute("IDNumber", emp.getIDNumber(), res.getInt(1));
+			}
+			if (!(emp.getIDNumber() == prevID)) {
+				updateAttribute("IDNumber", emp.getIDNumber(), prevID);
 			}
 			connection.close();
 		} catch (
 
 		SQLException e) {
-			System.out.println("Database not found!");
+			System.out.println("Error occured while updating");
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
-	public void deleteEmployee(int IDNo) {
+	public static void deleteEmployee(int IDNo) throws SQLException {
 		try {
 			connection = DriverManager.getConnection(url, user, pass);
 			System.out.println("Connected to " + databaseName);
@@ -204,8 +221,9 @@ public class DBConnection {
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("Database not found!");
+			System.out.println("ID Number not found!");
 			e.printStackTrace();
+			throw e;
 		}
 	}
 

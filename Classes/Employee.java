@@ -12,43 +12,40 @@ public class Employee {
     String emailAddress;
     String employedSince;
     String password;
-    int IDNumber;
+    int IDNumber, benefitsPackageNumber;
     int hoursWorkedLastPayPeriod;
     boolean fullTime;
-		
-		public static void main(String[] args) {
-			
-		}
-		
-		public Employee() {
-			
-		}
-		
-		public Employee(String firstName, String lastName, String SSNumber, String address, String dateOfBirth,
-				String homePhoneNumber, String mobilePhoneNumber, String emailAddress, String employedSince,
-				int IDNumber, int benefitsPackageNumber, int hoursWorkedLastPayPeriod, boolean fullTime, String password) {
-			this.firstName = firstName;
-			this.lastName = lastName;
-			this.SSNumber = SSNumber;
-			this.address = address;
-			this.dateOfBirth = dateOfBirth;
-			this.homePhoneNumber = homePhoneNumber;
-			this.mobilePhoneNumber = mobilePhoneNumber;
-			this.emailAddress = emailAddress;
-			this.employedSince = employedSince;
-      this.password = password;
-			this.IDNumber = IDNumber;
-			this.benefitsPackageNumber = benefitsPackageNumber;
-			this.hoursWorkedLastPayPeriod = hoursWorkedLastPayPeriod;
-			this.fullTime = fullTime;
-		}
 
+    public static void main(String[] args) {
 
+    }
 
+    public Employee() {
+
+    }
+
+    public Employee(String firstName, String lastName, String SSNumber, String address, String dateOfBirth,
+            String homePhoneNumber, String mobilePhoneNumber, String emailAddress, String employedSince, int IDNumber,
+            int benefitsPackageNumber, int hoursWorkedLastPayPeriod, boolean fullTime, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.SSNumber = SSNumber;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.homePhoneNumber = homePhoneNumber;
+        this.mobilePhoneNumber = mobilePhoneNumber;
+        this.emailAddress = emailAddress;
+        this.employedSince = employedSince;
+        this.password = password;
+        this.IDNumber = IDNumber;
+        this.benefitsPackageNumber = benefitsPackageNumber;
+        this.hoursWorkedLastPayPeriod = hoursWorkedLastPayPeriod;
+        this.fullTime = fullTime;
+    }
 
     public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
+        this.firstName = firstName;
+    }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
