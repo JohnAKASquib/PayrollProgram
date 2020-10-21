@@ -16,7 +16,8 @@ CREATE TABLE employee (
   fullTime boolean NOT NULL,
   grossIncome int,
   netIncome int,
-  BenefitPackage varchar(6)
+  BenefitPackage varchar(6),
+  Password varchar(20)
 );
 -------------------------------------------------------------------------
 CREATE TABLE benefit (

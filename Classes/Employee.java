@@ -12,6 +12,7 @@ public class Employee {
     String mobilePhoneNumber;
     String emailAddress;
     String employedSince;
+    String password;
     int IDNumber;
     int hoursWorkedLastPayPeriod;
     boolean fullTime;
@@ -73,6 +74,10 @@ public class Employee {
         this.employedSince = employedSince;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public void setIDNumber(int IDNumber) {
         this.IDNumber = IDNumber;
     }
@@ -121,6 +126,10 @@ public class Employee {
         return employedSince;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public int getIDNumber() {
         return IDNumber;
     }
@@ -143,6 +152,7 @@ public class Employee {
         System.out.println(mobilePhoneNumber);
         System.out.println(emailAddress);
         System.out.println(employedSince);
+        System.out.println(password);
         System.out.println(IDNumber);
         System.out.println(hoursWorkedLastPayPeriod);
         System.out.println(fullTime);

@@ -10,10 +10,10 @@ public class HRScreen extends JFrame implements ActionListener {
 	JCheckBox box;
 	JPanel left, top, center, empInfoView, empBenefitsView;
 	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, VIEW, DELETE, logout;
-	JLabel fn, ln, ss, addr, dob, homephone, mobphone, email, employedsince, idNo, hoursworked, fulltime;
+	JLabel fn, ln, ss, addr, dob, homephone, mobphone, email, employedsince, idNo, hoursworked, pass, fulltime;
 	JLabel benefits, current, choice;
 	JTextField firstname, lastname, socialsec, address, DOB, homeNo, mobileNo, emailAddress, dateStarted, IDNumber,
-			hoursWorkedLastPayPeriod;
+			hoursWorkedLastPayPeriod, password;
 
 	public HRScreen() {
 		super("Payroll Program");
@@ -103,6 +103,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		email = new JLabel("Email Address: ");
 		employedsince = new JLabel("Date Hired: ");
 		idNo = new JLabel("ID No.: ");
+		pass = new JLabel("Password: ");
 		hoursworked = new JLabel("Hours Worked Last Pay Period: ");
 		fulltime = new JLabel("Full Time? (Y/N): ");
 		benefits = new JLabel("Benefits?");
@@ -126,6 +127,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		dateStarted = new JTextField();
 		IDNumber = new JTextField();
 		hoursWorkedLastPayPeriod = new JTextField();
+		password = new JTextField();
 	}
 
 	public void addPanelsToFrame() {
@@ -187,6 +189,8 @@ public class HRScreen extends JFrame implements ActionListener {
 		empInfoView.add(IDNumber);
 		empInfoView.add(hoursworked);
 		empInfoView.add(hoursWorkedLastPayPeriod);
+		empInfoView.add(pass);
+		empInfoView.add(password);
 		empInfoView.add(fulltime);
 		empInfoView.add(box);// JCheckBox
 		// labels
@@ -201,7 +205,8 @@ public class HRScreen extends JFrame implements ActionListener {
 		employedsince.setBounds(200, 370, 190, 22);
 		idNo.setBounds(200, 410, 190, 22);
 		hoursworked.setBounds(200, 450, 190, 22);
-		fulltime.setBounds(200, 490, 190, 22);
+		pass.setBounds(200, 490, 190, 22);
+		fulltime.setBounds(200, 530, 190, 22);
 		// text fields
 		firstname.setBounds(410, 50, 160, 22);
 		lastname.setBounds(410, 90, 160, 22);
@@ -214,8 +219,9 @@ public class HRScreen extends JFrame implements ActionListener {
 		dateStarted.setBounds(410, 370, 160, 22);
 		IDNumber.setBounds(410, 410, 160, 22);
 		hoursWorkedLastPayPeriod.setBounds(410, 450, 160, 22);
+		password.setBounds(410, 490, 160, 22);
 		// check box
-		box.setBounds(410, 475, 50, 50);
+		box.setBounds(410, 515, 50, 50);
 	}
 
 	public void addToEmpBenefits() {
