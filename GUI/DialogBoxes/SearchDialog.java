@@ -1,7 +1,8 @@
-package GUI;
+package GUI.DialogBoxes;
 
 import javax.swing.*;
 import java.awt.event.*;
+import GUI.HRScreen;
 
 public class SearchDialog extends JFrame implements ActionListener {
     JDialog sd;
@@ -9,7 +10,7 @@ public class SearchDialog extends JFrame implements ActionListener {
     JLabel enter;
     JTextField idfield;
 
-    SearchDialog() {
+    public SearchDialog() {
         sd = new JDialog(this, "ID Search", true);
         submit = new JButton("Search");
         enter = new JLabel("Enter ID Number:");

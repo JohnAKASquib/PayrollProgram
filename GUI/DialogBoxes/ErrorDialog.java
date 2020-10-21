@@ -1,4 +1,4 @@
-package GUI;
+package GUI.DialogBoxes;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -9,7 +9,7 @@ public class ErrorDialog extends JFrame implements ActionListener {
     JButton close;
     JDialog ed;
 
-    ErrorDialog() {
+    public ErrorDialog() {
         ed = new JDialog(this, "Error", true);
         error = new JLabel(basic_error);
         close = new JButton("Close");

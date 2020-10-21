@@ -1,4 +1,4 @@
-package GUI;
+package GUI.DialogBoxes;
 
 import java.awt.event.*;
 import javax.swing.*;
@@ -8,7 +8,7 @@ public class ConfirmDialog extends JFrame implements ActionListener {
     JButton ok;
     JDialog cd;
 
-    ConfirmDialog() {
+    public ConfirmDialog() {
         cd = new JDialog(this, "Success", true);
         confirmation = new JLabel("Operation Successfull");
         ok = new JButton("OK");

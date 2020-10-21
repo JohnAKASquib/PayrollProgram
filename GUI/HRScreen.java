@@ -3,16 +3,18 @@ package GUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
-
 import javax.swing.*;
 import javax.swing.border.Border;
+import GUI.DialogBoxes.*;
 import Classes.*;
 import DB.*;
 
 public class HRScreen extends JFrame implements ActionListener {
+	static int IDNoBeforeChange;
 	CardLayout card = new CardLayout();
 	static JCheckBox box;
 	static ConfirmDialog cd;
+	static WarningDialog wd;
 	static ErrorDialog ed;
 	SearchDialog sd;
 	DeleteDialog dd;
@@ -54,17 +56,26 @@ public class HRScreen extends JFrame implements ActionListener {
 		empInfo.addActionListener(this);
 		empBenefits.addActionListener(this);
 		ADD.addActionListener(this);
+		UPDATE.addActionListener(this);
 		VIEW.addActionListener(this);
 		DELETE.addActionListener(this);
+	}
+
+	private static Employee getEmpFromTextFields() throws NumberFormatException {
+		try {
+			return new Employee(firstname.getText(), lastname.getText(), socialsec.getText(), address.getText(),
+					DOB.getText(), homeNo.getText(), mobileNo.getText(), emailAddress.getText(), dateStarted.getText(),
+					Integer.parseInt(IDNumber.getText()), 0, Integer.parseInt(hoursWorkedLastPayPeriod.getText()),
+					box.isSelected(), password.getText());
+		} catch (NumberFormatException e) {
+			throw e;
+		}
 	}
 
 	private void addEmployee() {
 		try {
 			// make a temporary employee object
-			Employee temp = new Employee(firstname.getText(), lastname.getText(), socialsec.getText(),
-					address.getText(), DOB.getText(), homeNo.getText(), mobileNo.getText(), emailAddress.getText(),
-					dateStarted.getText(), Integer.parseInt(IDNumber.getText()), 0,
-					Integer.parseInt(hoursWorkedLastPayPeriod.getText()), box.isSelected(), password.getText());
+			Employee temp = getEmpFromTextFields();
 			// call the DBConnection method to insert the employee into the database
 			if (DBConnection.addEmployee(temp)) {// depending on whether the operation succeeds or not
 				cd.makeVisible();// either the confirm dialog will show
@@ -72,7 +83,7 @@ public class HRScreen extends JFrame implements ActionListener {
 				ed.makeVisible("Encountered error while adding employee");// or this one will
 			}
 		} catch (NumberFormatException e) {
-			ed.makeVisible("Error: Some fields can't be empty");
+			ed.makeVisible("Error: Some fields can't be empty, others must be an integer");
 		}
 	}
 
@@ -89,6 +100,7 @@ public class HRScreen extends JFrame implements ActionListener {
 			emailAddress.setText(temp.getEmailAddress());
 			dateStarted.setText(temp.getEmployedSince());
 			IDNumber.setText(String.valueOf(temp.getIDNumber()));
+			IDNoBeforeChange = temp.getIDNumber();// this is used to prevent the user from causing bugs
 			hoursWorkedLastPayPeriod.setText(String.valueOf(temp.getHoursWorkedLastPayPeriod()));
 			password.setText(temp.getPassword());
 			if (temp.isFullTime() && !box.isSelected())
@@ -98,6 +110,19 @@ public class HRScreen extends JFrame implements ActionListener {
 			cd.makeVisible();
 		} catch (SQLException e) {
 			ed.makeVisible("Error: Could not find employee with that ID");
+		}
+	}
+
+	public static void updateEmployee() {
+		try {
+			DBConnection.updateEmployee(getEmpFromTextFields(), IDNoBeforeChange);
+			cd.makeVisible();
+		} catch (NumberFormatException e) {
+			ed.makeVisible("Error: Some fields can't be empty, others must be an integer");
+		} catch (SQLException s) {
+			ed.makeVisible("Error occured while updating row in DB");
+		} finally {
+
 		}
 	}
 
@@ -124,6 +149,10 @@ public class HRScreen extends JFrame implements ActionListener {
 			if (choice.getText() == "Employee Info") {
 				addEmployee();
 			}
+		} else if (source == this.UPDATE) {
+			if (choice.getText() == "Employee Info") {
+				wd.makeVisible(Integer.toString(IDNoBeforeChange));
+			}
 		} else if (source == this.VIEW) {
 			if (choice.getText() == "Employee Info") {
 				sd.makeVisible();
@@ -140,10 +169,12 @@ public class HRScreen extends JFrame implements ActionListener {
 		ed = new ErrorDialog();
 		cd = new ConfirmDialog();
 		dd = new DeleteDialog();
+		wd = new WarningDialog();
 		sd.setVisible(false);
 		cd.setVisible(false);
 		ed.setVisible(false);
 		dd.setVisible(false);
+		wd.setVisible(false);
 	}
 
 	private void setupFrame() {

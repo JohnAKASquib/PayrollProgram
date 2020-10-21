@@ -1,7 +1,8 @@
-package GUI;
+package GUI.DialogBoxes;
 
 import javax.swing.*;
 import java.awt.event.*;
+import GUI.HRScreen;
 
 public class DeleteDialog extends JFrame implements ActionListener {
     JDialog dd;
@@ -9,7 +10,7 @@ public class DeleteDialog extends JFrame implements ActionListener {
     JLabel enter;
     JTextField idfield;
 
-    DeleteDialog() {
+    public DeleteDialog() {
         dd = new JDialog(this, "ID Delete", true);
         delete = new JButton("Delete");
         enter = new JLabel("Enter ID Number:");
