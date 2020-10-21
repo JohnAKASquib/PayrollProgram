@@ -38,7 +38,7 @@ public class DBConnection {
 		return false;
 	}
 
-	public void addEmployee(Employee emp) {
+	public static Boolean addEmployee(Employee emp) {
 		try {
 			connection = DriverManager.getConnection(url, user, pass);
 			System.out.println("Connected to " + databaseName);
@@ -63,13 +63,15 @@ public class DBConnection {
 			}
 			statement.close();
 			connection.close();
+			return true;
 		} catch (SQLException e) {
-			System.out.println("Database not found!");
+			System.out.println("Database related error!");
 			e.printStackTrace();
+			return false;
 		}
 	}
 
-	public Employee retrieveEmployeeInfo(int IDNo) {
+	public static Employee retrieveEmployeeInfo(int IDNo) throws SQLException {
 		Employee temp = new Employee();
 		try {
 			connection = DriverManager.getConnection(url, user, pass);
@@ -77,7 +79,7 @@ public class DBConnection {
 			String query = "SELECT * FROM employee WHERE IDNumber=" + Integer.toString(IDNo);
 			Statement statement = connection.createStatement();
 			ResultSet res = statement.executeQuery(query);
-
+			res.next();
 			temp.setIDNumber(res.getInt(1));
 			temp.setFirstName(res.getString(2));
 			temp.setLastName(res.getString(3));
@@ -94,8 +96,9 @@ public class DBConnection {
 
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("Database not found!");
+			System.out.println("IDNumber not found!");
 			e.printStackTrace();
+			throw e;
 		}
 		return temp;
 	}
@@ -194,7 +197,7 @@ public class DBConnection {
 		}
 	}
 
-	public void deleteEmployee(int IDNo) {
+	public static void deleteEmployee(int IDNo) throws SQLException {
 		try {
 			connection = DriverManager.getConnection(url, user, pass);
 			System.out.println("Connected to " + databaseName);
@@ -204,8 +207,9 @@ public class DBConnection {
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("Database not found!");
+			System.out.println("ID Number not found!");
 			e.printStackTrace();
+			throw e;
 		}
 	}
 

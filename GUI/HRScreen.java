@@ -2,18 +2,26 @@ package GUI;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
+
 import javax.swing.*;
 import javax.swing.border.Border;
+import Classes.*;
+import DB.*;
 
 public class HRScreen extends JFrame implements ActionListener {
 	CardLayout card = new CardLayout();
-	JCheckBox box;
+	static JCheckBox box;
+	static ConfirmDialog cd;
+	static ErrorDialog ed;
+	SearchDialog sd;
+	DeleteDialog dd;
 	JPanel left, top, center, empInfoView, empBenefitsView;
 	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, VIEW, DELETE, logout;
 	JLabel fn, ln, ss, addr, dob, homephone, mobphone, email, employedsince, idNo, hoursworked, pass, fulltime;
 	JLabel benefits, current, choice;
-	JTextField firstname, lastname, socialsec, address, DOB, homeNo, mobileNo, emailAddress, dateStarted, IDNumber,
-			hoursWorkedLastPayPeriod, password;
+	static JTextField firstname, lastname, socialsec, address, DOB, homeNo, mobileNo, emailAddress, dateStarted,
+			IDNumber, hoursWorkedLastPayPeriod, password;
 
 	public HRScreen() {
 		super("Payroll Program");
@@ -22,6 +30,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		setupButtons();
 		setupLabels();
 		setupTextFields();
+		setupDialogs();
 		addPanelsToFrame();
 		addToTop();
 		addToLeft();
@@ -37,9 +46,68 @@ public class HRScreen extends JFrame implements ActionListener {
 		return this.logout;
 	}
 
-	public void addActionListeners() {
+	public static ErrorDialog getED() {
+		return ed;
+	}
+
+	private void addActionListeners() {
 		empInfo.addActionListener(this);
 		empBenefits.addActionListener(this);
+		ADD.addActionListener(this);
+		VIEW.addActionListener(this);
+		DELETE.addActionListener(this);
+	}
+
+	private void addEmployee() {
+		try {
+			// make a temporary employee object
+			Employee temp = new Employee(firstname.getText(), lastname.getText(), socialsec.getText(),
+					address.getText(), DOB.getText(), homeNo.getText(), mobileNo.getText(), emailAddress.getText(),
+					dateStarted.getText(), Integer.parseInt(IDNumber.getText()), 0,
+					Integer.parseInt(hoursWorkedLastPayPeriod.getText()), box.isSelected(), password.getText());
+			// call the DBConnection method to insert the employee into the database
+			if (DBConnection.addEmployee(temp)) {// depending on whether the operation succeeds or not
+				cd.makeVisible();// either the confirm dialog will show
+			} else {
+				ed.makeVisible("Encountered error while adding employee");// or this one will
+			}
+		} catch (NumberFormatException e) {
+			ed.makeVisible("Error: Some fields can't be empty");
+		}
+	}
+
+	public static void retrieveEmployee(int id) {
+		try {
+			Employee temp = DBConnection.retrieveEmployeeInfo(id);
+			firstname.setText(temp.getFirstName());
+			lastname.setText(temp.getLastName());
+			socialsec.setText(temp.getSSNumber());
+			address.setText(temp.getAddress());
+			DOB.setText(temp.getDateOfBirth());
+			homeNo.setText(temp.getHomePhoneNumber());
+			mobileNo.setText(temp.getMobilePhoneNumber());
+			emailAddress.setText(temp.getEmailAddress());
+			dateStarted.setText(temp.getEmployedSince());
+			IDNumber.setText(String.valueOf(temp.getIDNumber()));
+			hoursWorkedLastPayPeriod.setText(String.valueOf(temp.getHoursWorkedLastPayPeriod()));
+			password.setText(temp.getPassword());
+			if (temp.isFullTime() && !box.isSelected())
+				box.doClick();
+			else if (!temp.isFullTime() && box.isSelected())
+				box.doClick();
+			cd.makeVisible();
+		} catch (SQLException e) {
+			ed.makeVisible("Error: Could not find employee with that ID");
+		}
+	}
+
+	public static void deleteEmployee(int id) {
+		try {
+			DBConnection.deleteEmployee(id);
+			cd.makeVisible();
+		} catch (SQLException e) {
+			ed.makeVisible("No employee found with that ID");
+		}
 	}
 
 	public void actionPerformed(ActionEvent ae) {
@@ -52,17 +120,40 @@ public class HRScreen extends JFrame implements ActionListener {
 		} else if (source == this.empBenefits) {
 			choice.setText(empBenefits.getText());
 			card.show(center, "Emp Benefits");
+		} else if (source == this.ADD) {
+			if (choice.getText() == "Employee Info") {
+				addEmployee();
+			}
+		} else if (source == this.VIEW) {
+			if (choice.getText() == "Employee Info") {
+				sd.makeVisible();
+			}
+		} else if (source == this.DELETE) {
+			if (choice.getText() == "Employee Info") {
+				dd.makeVisible();
+			}
 		}
 	}
 
-	public void setupFrame() {
+	private void setupDialogs() {
+		sd = new SearchDialog();
+		ed = new ErrorDialog();
+		cd = new ConfirmDialog();
+		dd = new DeleteDialog();
+		sd.setVisible(false);
+		cd.setVisible(false);
+		ed.setVisible(false);
+		dd.setVisible(false);
+	}
+
+	private void setupFrame() {
 		// frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// check box will be set up here also
 		box = new JCheckBox();
 	}
 
-	public void setupPanels() {
+	private void setupPanels() {
 		// make a border object
 		Border blackline = BorderFactory.createLineBorder(Color.BLACK, 2);
 		// give left panel a grid layout
@@ -77,7 +168,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		empBenefitsView = new JPanel(null);
 	}
 
-	public void setupButtons() {
+	private void setupButtons() {
 		// buttons
 		empInfo = new JButton("Employee Info");
 		empBenefits = new JButton("Employee Benefits");
@@ -91,7 +182,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		logout = new JButton("LOGOUT");
 	}
 
-	public void setupLabels() {
+	private void setupLabels() {
 		// labels
 		fn = new JLabel("First Name: ");
 		ln = new JLabel("Last Name: ");
@@ -112,7 +203,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		choice.setText(empInfo.getText());
 	}
 
-	public void setupTextFields() {
+	private void setupTextFields() {
 		// text fields
 		firstname = new JTextField();
 		// firstname.setSize(200, 10);
@@ -130,14 +221,14 @@ public class HRScreen extends JFrame implements ActionListener {
 		password = new JTextField();
 	}
 
-	public void addPanelsToFrame() {
+	private void addPanelsToFrame() {
 		// add panels to frame
 		add(left, BorderLayout.WEST);
 		add(top, BorderLayout.NORTH);
 		add(center, BorderLayout.CENTER);
 	}
 
-	public void addToTop() {
+	private void addToTop() {
 		// add logout button
 		top.add(logout);
 		// add labels for the user
@@ -151,7 +242,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		top.add(empNet);
 	}
 
-	public void addToLeft() {
+	private void addToLeft() {
 		// add buttons to left panel
 		left.add(ADD);
 		left.add(UPDATE);
@@ -159,13 +250,13 @@ public class HRScreen extends JFrame implements ActionListener {
 		left.add(DELETE);
 	}
 
-	public void addToCenter() {
+	private void addToCenter() {
 		// add content panels to center
 		center.add(empInfoView, "Emp Info");
 		center.add(empBenefitsView, "Emp Benefits");
 	}
 
-	public void addToEmpInfo() {
+	private void addToEmpInfo() {
 		// add labels and text fields to panel
 		empInfoView.add(fn);
 		empInfoView.add(firstname);
@@ -224,7 +315,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		box.setBounds(410, 515, 50, 50);
 	}
 
-	public void addToEmpBenefits() {
+	private void addToEmpBenefits() {
 		empBenefitsView.add(benefits);
 		benefits.setBounds(200, 50, 190, 22);
 	}
