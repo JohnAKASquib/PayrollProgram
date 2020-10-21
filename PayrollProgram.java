@@ -14,7 +14,6 @@ public class PayrollProgram implements ActionListener {
         screen = new HRScreen();
         logscreen = new LoginScreen();
         screen.setVisible(false);
-        logscreen.setSize(500, 325);
     }
 
     public void addActionListeners() {
@@ -35,14 +34,22 @@ public class PayrollProgram implements ActionListener {
         }
     }
 
+    private void HRLogin() {
+        if (logscreen.HRPasswordMatch() == true) {
+            logscreen.setVisible(false);
+            screen.setVisible(true);
+        } else {
+            return;
+        }
+    }
+
     public void login(boolean employee) {
         if (employee == true) {
             logscreen.setVisible(false);
             screen.setVisible(true);
             screen.empLoggedIn();
         } else {
-            logscreen.setVisible(false);
-            screen.setVisible(true);
+            HRLogin();
         }
         logscreen.getUserField().setText(null);
         logscreen.getPassField().setText(null);
