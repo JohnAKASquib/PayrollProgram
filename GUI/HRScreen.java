@@ -8,6 +8,7 @@ import javax.swing.border.Border;
 import GUI.DialogBoxes.*;
 import Classes.*;
 import DB.*;
+import GUI.Panels.*;
 
 public class HRScreen extends JFrame implements ActionListener {
 	static int IDNoBeforeChange;
@@ -18,10 +19,11 @@ public class HRScreen extends JFrame implements ActionListener {
 	static ErrorDialog ed;
 	SearchDialog sd;
 	DeleteDialog dd;
-	JPanel left, top, center, empInfoView, empBenefitsView;
+	BenefitPanel empBenefitsView;
+	JPanel left, top, center, empInfoView;
 	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, VIEW, DELETE, logout;
 	JLabel fn, ln, ss, addr, dob, homephone, mobphone, email, employedsince, idNo, hoursworked, pass, fulltime;
-	JLabel benefits, current, choice;
+	JLabel current, choice;
 	static JTextField firstname, lastname, socialsec, address, DOB, homeNo, mobileNo, emailAddress, dateStarted,
 			IDNumber, hoursWorkedLastPayPeriod, password;
 
@@ -37,7 +39,6 @@ public class HRScreen extends JFrame implements ActionListener {
 		addToTop();
 		addToLeft();
 		addToEmpInfo();
-		addToEmpBenefits();
 		addToCenter();
 		addActionListeners();
 		setSize(1250, 700);
@@ -196,7 +197,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		center = new JPanel(card);
 		// other panels have no specific layout manager, they will be added to center
 		empInfoView = new JPanel(null);
-		empBenefitsView = new JPanel(null);
+		empBenefitsView = new BenefitPanel();
 	}
 
 	private void setupButtons() {
@@ -228,7 +229,6 @@ public class HRScreen extends JFrame implements ActionListener {
 		pass = new JLabel("Password: ");
 		hoursworked = new JLabel("Hours Worked Last Pay Period: ");
 		fulltime = new JLabel("Full Time? (Y/N): ");
-		benefits = new JLabel("Benefits?");
 		current = new JLabel("Currently selected: ");
 		choice = new JLabel();
 		choice.setText(empInfo.getText());
@@ -237,9 +237,7 @@ public class HRScreen extends JFrame implements ActionListener {
 	private void setupTextFields() {
 		// text fields
 		firstname = new JTextField();
-		// firstname.setSize(200, 10);
 		lastname = new JTextField();
-		// lastname.setSize(200, 10);
 		socialsec = new JTextField();
 		address = new JTextField();
 		DOB = new JTextField();
@@ -344,11 +342,6 @@ public class HRScreen extends JFrame implements ActionListener {
 		password.setBounds(410, 490, 160, 22);
 		// check box
 		box.setBounds(410, 515, 50, 50);
-	}
-
-	private void addToEmpBenefits() {
-		empBenefitsView.add(benefits);
-		benefits.setBounds(200, 50, 190, 22);
 	}
 
 	public void empLoggedIn() {
