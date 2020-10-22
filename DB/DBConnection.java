@@ -227,6 +227,54 @@ public class DBConnection {
 		}
 	}
 
+  public static String retrieveEmployeeBenPackage (int id) throws SQLException{
+    try {
+			connection = DriverManager.getConnection(url, user, pass);
+			System.out.println("Connected to " + databaseName);
+			String query = "SELECT BenefitPackage FROM employee WHERE IDNumber="+Integer.toString(id);
+			Statement statement = connection.createStatement();
+			ResultSet res = statement.executeQuery();
+			res.next();
+			connection.close();
+			return res.getString(1);
+    }catch(SQLException e){
+      System.out.println("Error retrieving BenefitPackage");
+      throw e;
+    }
+  }
+  
+  public static void removeBenPackage(int id) throws SQLException{
+    try {
+  connection = DriverManager.getConnection(url, user, pass);
+ 	System.out.println("Connected to " + databaseName);
+ 	String sql = "UPDATE employee set BenefitPackage=null WHERE IDNumber=?";
+	PreparedStatement pstate = connection.prepareStatement(sql);
+	pstate.setString(1,Integer.toString(id));
+	pstate.executeUpdate();
+	pstate.close();
+	connection.close();
+  }catch(SQLException e){
+    System.out.println("Error removing BenefitPackage");
+    throw e;
+  }
+  
+  public static void updateBenPackage(int id, String package)throws SQLException{
+    try {
+  connection = DriverManager.getConnection(url, user, pass);
+ 	System.out.println("Connected to " + databaseName);
+ 	String sql = "UPDATE employee set BenefitPackage=? WHERE IDNumber=?";
+	PreparedStatement pstate = connection.prepareStatement(sql);
+	pstate.setString(1,package);
+	pstate.setInt(2,id);
+	pstate.executeUpdate();
+	pstate.close();
+	connection.close();
+  }catch(SQLException e){
+    System.out.println("Error updating BenefitPackage");
+    throw e;
+  }
+  }
+  
 	public static void main(String[] args)
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		try {
