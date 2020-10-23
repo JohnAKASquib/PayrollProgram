@@ -227,6 +227,63 @@ public class DBConnection {
 		}
 	}
 
+	public static String[] retrieveEmployeeBenPackage(int id) throws SQLException {
+		try {
+			String data[] = { "", "", "" };
+			connection = DriverManager.getConnection(url, user, pass);
+			System.out.println("Connected to " + databaseName);
+			String query = "SELECT FirstName, Lastname, BenefitPackage FROM employee WHERE IDNumber="
+					+ Integer.toString(id);
+			Statement statement = connection.createStatement();
+			ResultSet res = statement.executeQuery(query);
+			res.next();
+			data[0] = res.getString(1);
+			data[1] = res.getString(2);
+			data[2] = res.getString(3);
+			return data;
+		} catch (SQLException e) {
+			System.out.println("Error retrieving BenefitPackage");
+			e.printStackTrace();
+			throw e;
+		} finally {
+			connection.close();
+		}
+	}
+
+	public static void removeBenPackage(int id) throws SQLException {
+		try {
+			connection = DriverManager.getConnection(url, user, pass);
+			System.out.println("Connected to " + databaseName);
+			String sql = "UPDATE employee set BenefitPackage=? WHERE IDNumber=?";
+			PreparedStatement pstate = connection.prepareStatement(sql);
+			pstate.setString(1, "NULL");
+			pstate.setString(2, Integer.toString(id));
+			pstate.executeUpdate();
+			pstate.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error removing BenefitPackage");
+			throw e;
+		}
+	}
+
+	public static void updateBenPackage(int id, String p) throws SQLException {
+		try {
+			connection = DriverManager.getConnection(url, user, pass);
+			System.out.println("Connected to " + databaseName);
+			String sql = "UPDATE employee set BenefitPackage=? WHERE IDNumber=?";
+			PreparedStatement pstate = connection.prepareStatement(sql);
+			pstate.setString(1, p);
+			pstate.setInt(2, id);
+			pstate.executeUpdate();
+			pstate.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error updating BenefitPackage");
+			throw e;
+		}
+	}
+
 	public static void main(String[] args)
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		try {

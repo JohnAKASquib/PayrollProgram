@@ -3,16 +3,18 @@ package GUI.DialogBoxes;
 import javax.swing.*;
 import java.awt.event.*;
 import GUI.HRScreen;
+import GUI.Panels.*;
 
 public class DeleteDialog extends JFrame implements ActionListener {
     JDialog dd;
     JButton delete;
     JLabel enter;
     JTextField idfield;
+    String del = "Delete";
 
     public DeleteDialog() {
         dd = new JDialog(this, "ID Delete", true);
-        delete = new JButton("Delete");
+        delete = new JButton(del);
         enter = new JLabel("Enter ID Number:");
         idfield = new JTextField();
         delete.addActionListener(this);
@@ -29,7 +31,7 @@ public class DeleteDialog extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         try {
             Object source = ae.getSource();
-            if (source == delete) {
+            if (source == delete && delete.getText() == del) {
                 makeNotVisible();
                 HRScreen.deleteEmployee(Integer.parseInt(idfield.getText()));
             }
