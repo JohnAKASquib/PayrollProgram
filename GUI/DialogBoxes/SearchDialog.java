@@ -2,7 +2,10 @@ package GUI.DialogBoxes;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.SQLException;
+
 import GUI.HRScreen;
+import GUI.Panels.*;
 
 public class SearchDialog extends JFrame implements ActionListener {
     JDialog sd;
@@ -29,13 +32,19 @@ public class SearchDialog extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         try {
             Object source = ae.getSource();
-            if (source == submit) {
+            if (source == submit && HRScreen.getChoice().getText() == "Employee Info") {
                 makeNotVisible();
                 HRScreen.retrieveEmployee(Integer.parseInt(idfield.getText()));
+            } else if (source == submit && HRScreen.getChoice().getText() == "Employee Benefits") {
+                makeNotVisible();
+                BenefitPanel.getBenefit(Integer.parseInt(idfield.getText()));
             }
         } catch (NumberFormatException e) {
             makeNotVisible();
             HRScreen.getED().makeVisible("Error: ID Number must be an Integer");
+        } catch (SQLException e) {
+            makeNotVisible();
+            HRScreen.getED().makeVisible("Error: No match for that ID");
         }
     }
 

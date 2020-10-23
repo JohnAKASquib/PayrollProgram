@@ -23,7 +23,8 @@ public class HRScreen extends JFrame implements ActionListener {
 	JPanel left, top, center, empInfoView;
 	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, VIEW, DELETE, logout;
 	JLabel fn, ln, ss, addr, dob, homephone, mobphone, email, employedsince, idNo, hoursworked, pass, fulltime;
-	JLabel current, choice;
+	JLabel current;
+	static JLabel choice;
 	static JTextField firstname, lastname, socialsec, address, DOB, homeNo, mobileNo, emailAddress, dateStarted,
 			IDNumber, hoursWorkedLastPayPeriod, password;
 
@@ -51,6 +52,14 @@ public class HRScreen extends JFrame implements ActionListener {
 
 	public static ErrorDialog getED() {
 		return ed;
+	}
+
+	public static ConfirmDialog getCD() {
+		return cd;
+	}
+
+	public static JLabel getChoice() {
+		return choice;
 	}
 
 	private void addActionListeners() {
@@ -153,14 +162,18 @@ public class HRScreen extends JFrame implements ActionListener {
 		} else if (source == this.UPDATE) {
 			if (choice.getText() == "Employee Info") {
 				wd.makeVisible(Integer.toString(IDNoBeforeChange));
+			} else if (choice.getText() == "Employee Benefits") {
+				wd.makeVisible();
 			}
 		} else if (source == this.VIEW) {
-			if (choice.getText() == "Employee Info") {
+			if (choice.getText() == "Employee Info" || choice.getText() == "Employee Benefits") {
 				sd.makeVisible();
 			}
 		} else if (source == this.DELETE) {
 			if (choice.getText() == "Employee Info") {
 				dd.makeVisible();
+			} else if (choice.getText() == "Employee Benefits") {
+				wd.makeVisible(1);
 			}
 		}
 	}
