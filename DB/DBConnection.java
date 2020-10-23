@@ -284,12 +284,12 @@ public class DBConnection {
 		}
 	}
 
-	public static String[] getGrossPay(int id) throws SQLException {
+	public static String[] getPay(int id, String inc) throws SQLException {
 		try {
 			String s[] = { "", "", "" };
 			connection = DriverManager.getConnection(url, user, pass);
 			System.out.println("Connected to " + databaseName);
-			String sql = "SELECT grossIncome, firstname, lastname FROM employee WHERE IDNumber=" + Integer.toString(id);
+			String sql = "SELECT " + inc + ", firstname, lastname FROM employee WHERE IDNumber=" + Integer.toString(id);
 			Statement statement = connection.createStatement();
 			ResultSet res = statement.executeQuery(sql);
 			res.next();
@@ -298,7 +298,7 @@ public class DBConnection {
 			s[2] = res.getString(3);
 			return s;
 		} catch (SQLException e) {
-			System.out.println("Error retrieving GrossPay");
+			System.out.println("Error retrieving Pay from DB");
 			e.printStackTrace();
 			throw e;
 		}
@@ -345,12 +345,10 @@ public class DBConnection {
 				default:
 					benCost = 0;
 			}
-			arr = getGrossPay(id);
-			if (arr[0] == null)
-				gross = 0;
-			else
-				gross = Integer.parseInt(arr[0]);
-			net = ((gross - benCost) * .3);
+			arr = getPay(id, "grossIncome");
+			gross = Integer.parseInt(arr[0]);
+			net = gross - benCost;
+			net = net - (net * .3);
 			if (net < 0)
 				net = 0;
 			connection = DriverManager.getConnection(url, user, pass);

@@ -2,18 +2,17 @@ package GUI.Panels;
 
 import java.awt.Font;
 import java.sql.SQLException;
-
+import GUI.HRScreen;
 import javax.swing.*;
 import DB.DBConnection;
-import GUI.HRScreen;
 
-public class GrossPanel extends JPanel {
+public class NetPanel extends JPanel {
     static JLabel name, id;
     JLabel info, dollar;
     static JTextField income;
-    String gross = "Employee's Pay Before Deductions from Benefits/Tax";
+    String Net = "Net Income cannot be edited, it will be updated when Gross Income is.";
 
-    public GrossPanel() {
+    public NetPanel() {
         setLayout(null);
         setupLabels();
         setupTextFields();
@@ -29,11 +28,12 @@ public class GrossPanel extends JPanel {
         id.setFont(f);
         dollar = new JLabel("$");
         dollar.setFont(f);
-        info = new JLabel(gross);
+        info = new JLabel(Net);
     }
 
     private void setupTextFields() {
         income = new JTextField();
+        income.setEditable(false);
     }
 
     private void setBoundsForAll() {
@@ -52,31 +52,16 @@ public class GrossPanel extends JPanel {
         add(income);
     }
 
-    public static void getGrossPay(int idNo) {
+    public static void getNetPay(int idNo) {
         String arr[];
         try {
-            arr = DBConnection.getPay(idNo, "grossIncome");
+            arr = DBConnection.getPay(idNo, "netIncome");
             income.setText(arr[0]);
             name.setText(arr[1] + "  " + arr[2]);
             id.setText(Integer.toString(idNo));
-            HRScreen.getCD().makeVisible();
         } catch (SQLException e) {
             e.printStackTrace();
-            HRScreen.getED().makeVisible("Error retrieving Gross Pay");
-        }
-    }
-
-    public static void updatePay() {
-        try {
-            DBConnection.updatePay(Integer.parseInt(id.getText()), Integer.parseInt(income.getText()));
-            NetPanel.getNetPay(Integer.parseInt(id.getText()));
-            HRScreen.getCD().makeVisible();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            HRScreen.getED().makeVisible("Error updating Gross/Net Pay");
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            HRScreen.getED().makeVisible("Pay must be an Integer!");
+            HRScreen.getED().makeVisible("Error retrieving Net Pay");
         }
     }
 }

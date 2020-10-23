@@ -40,6 +40,7 @@ public class SearchDialog extends JFrame implements ActionListener {
                     BenefitPanel.getBenefit(Integer.parseInt(idfield.getText()));
                 } else if (HRScreen.getChoice().getText() == "Employee Gross Pay") {
                     GrossPanel.getGrossPay(Integer.parseInt(idfield.getText()));
+                    NetPanel.getNetPay(Integer.parseInt(idfield.getText()));
                 }
             }
         } catch (NumberFormatException e) {
