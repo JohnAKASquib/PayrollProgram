@@ -21,6 +21,7 @@ public class HRScreen extends JFrame implements ActionListener {
 	DeleteDialog dd;
 	BenefitPanel empBenefitsView;
 	TaxInfoPanel taxInfoView;
+	GrossPanel grossView;
 	JPanel left, top, center, empInfoView;
 	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, VIEW, DELETE, logout;
 	JLabel fn, ln, ss, addr, dob, homephone, mobphone, email, employedsince, idNo, hoursworked, pass, fulltime;
@@ -67,6 +68,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		empInfo.addActionListener(this);
 		empBenefits.addActionListener(this);
 		empTax.addActionListener(this);
+		empGross.addActionListener(this);
 		ADD.addActionListener(this);
 		UPDATE.addActionListener(this);
 		VIEW.addActionListener(this);
@@ -160,6 +162,9 @@ public class HRScreen extends JFrame implements ActionListener {
 		} else if (source == this.empTax) {
 			choice.setText(empTax.getText());
 			card.show(center, "Emp Tax");
+		} else if (source == this.empGross) {
+			choice.setText(empGross.getText());
+			card.show(center, "Emp Gross");
 		} else if (source == this.ADD) {
 			if (choice.getText() == "Employee Info") {
 				addEmployee();
@@ -169,9 +174,12 @@ public class HRScreen extends JFrame implements ActionListener {
 				wd.makeVisible(Integer.toString(IDNoBeforeChange));
 			} else if (choice.getText() == "Employee Benefits") {
 				wd.makeVisible();
+			} else if (choice.getText() == "Employee Gross Pay") {
+				wd.makeVisible(2);
 			}
 		} else if (source == this.VIEW) {
-			if (choice.getText() == "Employee Info" || choice.getText() == "Employee Benefits") {
+			if (choice.getText() == "Employee Info" || choice.getText() == "Employee Benefits"
+					|| choice.getText() == "Employee Gross Pay") {
 				sd.makeVisible();
 			}
 		} else if (source == this.DELETE) {
@@ -217,6 +225,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		empInfoView = new JPanel(null);
 		empBenefitsView = new BenefitPanel();
 		taxInfoView = new TaxInfoPanel();
+		grossView = new GrossPanel();
 	}
 
 	private void setupButtons() {
@@ -303,6 +312,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		center.add(empInfoView, "Emp Info");
 		center.add(empBenefitsView, "Emp Benefits");
 		center.add(taxInfoView, "Emp Tax");
+		center.add(grossView, "Emp Gross");
 	}
 
 	private void addToEmpInfo() {

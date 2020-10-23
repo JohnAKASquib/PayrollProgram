@@ -32,12 +32,15 @@ public class SearchDialog extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         try {
             Object source = ae.getSource();
-            if (source == submit && HRScreen.getChoice().getText() == "Employee Info") {
+            if (source == submit) {
                 makeNotVisible();
-                HRScreen.retrieveEmployee(Integer.parseInt(idfield.getText()));
-            } else if (source == submit && HRScreen.getChoice().getText() == "Employee Benefits") {
-                makeNotVisible();
-                BenefitPanel.getBenefit(Integer.parseInt(idfield.getText()));
+                if (HRScreen.getChoice().getText() == "Employee Info") {
+                    HRScreen.retrieveEmployee(Integer.parseInt(idfield.getText()));
+                } else if (HRScreen.getChoice().getText() == "Employee Benefits") {
+                    BenefitPanel.getBenefit(Integer.parseInt(idfield.getText()));
+                } else if (HRScreen.getChoice().getText() == "Employee Gross Pay") {
+                    GrossPanel.getGrossPay(Integer.parseInt(idfield.getText()));
+                }
             }
         } catch (NumberFormatException e) {
             makeNotVisible();
