@@ -20,6 +20,7 @@ public class HRScreen extends JFrame implements ActionListener {
 	SearchDialog sd;
 	DeleteDialog dd;
 	BenefitPanel empBenefitsView;
+	TaxInfoPanel taxInfoView;
 	JPanel left, top, center, empInfoView;
 	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, VIEW, DELETE, logout;
 	JLabel fn, ln, ss, addr, dob, homephone, mobphone, email, employedsince, idNo, hoursworked, pass, fulltime;
@@ -65,6 +66,7 @@ public class HRScreen extends JFrame implements ActionListener {
 	private void addActionListeners() {
 		empInfo.addActionListener(this);
 		empBenefits.addActionListener(this);
+		empTax.addActionListener(this);
 		ADD.addActionListener(this);
 		UPDATE.addActionListener(this);
 		VIEW.addActionListener(this);
@@ -155,6 +157,9 @@ public class HRScreen extends JFrame implements ActionListener {
 		} else if (source == this.empBenefits) {
 			choice.setText(empBenefits.getText());
 			card.show(center, "Emp Benefits");
+		} else if (source == this.empTax) {
+			choice.setText(empTax.getText());
+			card.show(center, "Emp Tax");
 		} else if (source == this.ADD) {
 			if (choice.getText() == "Employee Info") {
 				addEmployee();
@@ -211,6 +216,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		// other panels have no specific layout manager, they will be added to center
 		empInfoView = new JPanel(null);
 		empBenefitsView = new BenefitPanel();
+		taxInfoView = new TaxInfoPanel();
 	}
 
 	private void setupButtons() {
@@ -296,6 +302,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		// add content panels to center
 		center.add(empInfoView, "Emp Info");
 		center.add(empBenefitsView, "Emp Benefits");
+		center.add(taxInfoView, "Emp Tax");
 	}
 
 	private void addToEmpInfo() {
