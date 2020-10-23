@@ -180,9 +180,6 @@ public class BenefitPanel extends JPanel implements ActionListener {
         goldPackage = new JTable(goldInfo, columnNames);
         silverPackage = new JTable(silverInfo, columnNames);
         bronzePackage = new JTable(bronzeInfo, columnNames);
-        goldPackage.setCellSelectionEnabled(false);
-        silverPackage.setCellSelectionEnabled(false);
-        bronzePackage.setCellSelectionEnabled(false);
         goldPackage.setVisible(false);
         silverPackage.setVisible(false);
         bronzePackage.setVisible(true);
