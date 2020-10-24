@@ -20,6 +20,11 @@ public class NetPanel extends JPanel {
         addToThis();
     }
 
+    public void resetFields() {
+        name.setText("N/A");
+        id.setText("N/A");
+        income.setText(null);
+    }
     private void setupLabels() {
         Font f = new Font("Monospaced", Font.BOLD, 20);
         name = new JLabel("N/A");

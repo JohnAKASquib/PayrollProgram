@@ -71,6 +71,13 @@ public class BenefitPanel extends JPanel implements ActionListener {
         }
     }
 
+    public void resetFields() {
+        id.setText("No ID Selected");
+        fn.setText("N/A");
+        ln.setText("N/A");
+        pack.setText("None");
+    }
+
     public static void removeBenefits() {
         try {
             DBConnection.removeBenPackage(Integer.valueOf(id.getText()));

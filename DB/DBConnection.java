@@ -15,11 +15,11 @@ public class DBConnection {
 	static String user = "root";
 	static String pass = "root";
 
-	public static Boolean getHRPassword(int IDNo, String enteredPass) {
+	public static Boolean getPassword(int IDNo, String enteredPass, String table) {
 		try {
 			connection = DriverManager.getConnection(url, user, pass);
 			System.out.println("Connected to " + databaseName);
-			String query = "SELECT Password FROM hr WHERE IDNumber=" + Integer.toString(IDNo);
+			String query = "SELECT Password FROM " + table + " WHERE IDNumber=" + Integer.toString(IDNo);
 			Statement statement = connection.createStatement();
 			ResultSet res = statement.executeQuery(query);
 			while (res.next()) {
