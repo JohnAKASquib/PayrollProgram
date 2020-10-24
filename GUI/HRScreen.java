@@ -12,6 +12,7 @@ import GUI.Panels.*;
 
 public class HRScreen extends JFrame implements ActionListener {
 	static int IDNoBeforeChange;
+	boolean employeeIn;
 	CardLayout card = new CardLayout();
 	static JCheckBox box;
 	static ConfirmDialog cd;
@@ -153,21 +154,30 @@ public class HRScreen extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
-		// as we add more panels to center, this function will need to be updated to
-		// switch between them
+
 		if (source == this.empInfo) {
+			if (employeeIn)
+				UPDATE.setEnabled(true);
 			choice.setText(empInfo.getText());
 			card.show(center, "Emp Info");
 		} else if (source == this.empBenefits) {
+			if (employeeIn)
+				UPDATE.setEnabled(false);
 			choice.setText(empBenefits.getText());
 			card.show(center, "Emp Benefits");
 		} else if (source == this.empTax) {
+			if (employeeIn)
+				UPDATE.setEnabled(false);
 			choice.setText(empTax.getText());
 			card.show(center, "Emp Tax");
 		} else if (source == this.empGross) {
+			if (employeeIn)
+				UPDATE.setEnabled(false);
 			choice.setText(empGross.getText());
 			card.show(center, "Emp Gross");
 		} else if (source == this.empNet) {
+			if (employeeIn)
+				UPDATE.setEnabled(false);
 			choice.setText(empNet.getText());
 			card.show(center, "Emp Net");
 		} else if (source == this.ADD) {
@@ -381,7 +391,28 @@ public class HRScreen extends JFrame implements ActionListener {
 		box.setBounds(410, 515, 50, 50);
 	}
 
+	public void clearFields() {
+		firstname.setText(null);
+		lastname.setText(null);
+		socialsec.setText(null);
+		address.setText(null);
+		DOB.setText(null);
+		homeNo.setText(null);
+		mobileNo.setText(null);
+		emailAddress.setText(null);
+		dateStarted.setText(null);
+		IDNumber.setText(null);
+		hoursWorkedLastPayPeriod.setText(null);
+		password.setText(null);
+		if (box.isSelected())
+			box.doClick();
+		empBenefitsView.resetFields();
+		grossView.resetFields();
+		netView.resetFields();
+	}
+
 	public void empLoggedIn() {
+		employeeIn = true;
 		firstname.setEditable(false);
 		lastname.setEditable(false);
 		socialsec.setEditable(false);
@@ -390,10 +421,14 @@ public class HRScreen extends JFrame implements ActionListener {
 		IDNumber.setEditable(false);
 		hoursWorkedLastPayPeriod.setEditable(false);
 		box.setEnabled(false);
+		GrossPanel.disableIncomeEditing();
+		ADD.setEnabled(false);
+		DELETE.setEnabled(false);
 	}
 
 	public void empLoggedOut() {
-		if (!firstname.isEditable()) {
+		if (employeeIn) {
+			employeeIn = false;
 			firstname.setEditable(true);
 			lastname.setEditable(true);
 			socialsec.setEditable(true);
@@ -402,6 +437,9 @@ public class HRScreen extends JFrame implements ActionListener {
 			IDNumber.setEditable(true);
 			hoursWorkedLastPayPeriod.setEditable(true);
 			box.setEnabled(true);
+			GrossPanel.enableIncomeEditing();
+			ADD.setEnabled(true);
+			DELETE.setEnabled(true);
 		} else
 			return;
 	}

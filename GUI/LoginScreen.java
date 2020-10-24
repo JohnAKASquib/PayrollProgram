@@ -12,6 +12,7 @@ public class LoginScreen extends JFrame {
     JLabel username, password, incorrect;
 
     public LoginScreen() {
+        super("Payroll Program");
         setupFrame();
         setupLabels();
         setupTextFields();
@@ -47,8 +48,8 @@ public class LoginScreen extends JFrame {
     public void setupButtons() {
         empLogin = new JButton("Employee Login");
         hrLogin = new JButton("HR Login");
-        empLogin.setBounds(50, 200, 120, 30);
-        hrLogin.setBounds(220, 200, 120, 30);
+        empLogin.setBounds(50, 200, 170, 30);
+        hrLogin.setBounds(270, 200, 120, 30);
     }
 
     public void addToFrame() {
@@ -62,14 +63,26 @@ public class LoginScreen extends JFrame {
     }
 
     public Boolean HRPasswordMatch() {
-        if (DBConnection.getHRPassword(Integer.parseInt(userID.getText()),
-                String.valueOf(passphrase.getPassword())) == false) {
+        if (DBConnection.getPassword(Integer.parseInt(userID.getText()), String.valueOf(passphrase.getPassword()),
+                "hr") == false) {
             incorrect.setVisible(true);
             return false;
         } else {
             incorrect.setVisible(false);
             return true;
         }
+    }
+
+    public Boolean EMPPasswordMatch() {
+        if (DBConnection.getPassword(Integer.parseInt(userID.getText()), String.valueOf(passphrase.getPassword()),
+                "employee") == false) {
+            incorrect.setVisible(true);
+            return false;
+        } else {
+            incorrect.setVisible(false);
+            return true;
+        }
+
     }
 
     public JButton getHRLogin() {
