@@ -205,8 +205,8 @@ public class HRScreen extends JFrame implements ActionListener {
 			} else if (choice.getText() == "Employee Benefits") {
 				wd.makeVisible(1);
 			}
-		} else if (source==this.UNLOCK){
-		  ud.makeVisible();
+		} else if (source == this.UNLOCK) {
+			ud.makeVisible();
 		}
 	}
 
@@ -261,7 +261,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		UPDATE = new JButton("UPDATE");
 		VIEW = new JButton("VIEW");
 		DELETE = new JButton("DELETE");
-		UNLOCK=new JButton("UNLOCK");
+		UNLOCK = new JButton("UNLOCK");
 		logout = new JButton("LOGOUT");
 	}
 

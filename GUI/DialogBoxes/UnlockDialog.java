@@ -2,8 +2,11 @@ package GUI.DialogBoxes;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.SQLException;
+
 import DB.*;
 import GUI.Panels.*;
+import GUI.HRScreen;
 
 public class UnlockDialog extends JFrame implements ActionListener {
     JDialog ud;
@@ -33,13 +36,14 @@ public class UnlockDialog extends JFrame implements ActionListener {
             Object source = ae.getSource();
             if (source == Unlock && Unlock.getText() == unl) {
                 DBConnection.resetFailedAttempts(Integer.parseInt(idfield.getText()));
+                HRScreen.getCD().makeVisible();
             }
         } catch (NumberFormatException e) {
             HRScreen.getED().makeVisible("Error: ID Number must be an Integer");
-        } catch (SQLException e){
-          HRScreen.getED().makeVisible("Error unlocking ser with tgat ID");
-        } finally{
-          makeNotVisible();
+        } catch (SQLException e) {
+            HRScreen.getED().makeVisible("Error unlocking user with that ID");
+        } finally {
+            makeNotVisible();
         }
     }
 
