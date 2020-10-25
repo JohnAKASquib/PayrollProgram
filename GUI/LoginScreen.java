@@ -9,7 +9,7 @@ public class LoginScreen extends JFrame {
     JButton empLogin, hrLogin;
     JTextField userID;
     JPasswordField passphrase;
-    JLabel username, password, incorrect;
+    JLabel username, password, incorrect, locked;
 
     public LoginScreen() {
         super("Payroll Program");
@@ -31,11 +31,15 @@ public class LoginScreen extends JFrame {
         username = new JLabel("ID Number:");
         password = new JLabel("Password:");
         incorrect = new JLabel("Password/UserID Incorrect");
+        locked=new JLabel("User locked due to failed attempts");
         username.setBounds(50, 50, 70, 15);
         password.setBounds(50, 100, 70, 15);
         incorrect.setBounds(110, 150, 200, 15);
         incorrect.setForeground(Color.RED);
         incorrect.setVisible(false);
+        locked.setBounds(110,150,200,15);
+        locked.setForeground(Color.RED);
+        locked.setVisible(false);
     }
 
     public void setupTextFields() {
@@ -63,6 +67,9 @@ public class LoginScreen extends JFrame {
     }
 
     public Boolean HRPasswordMatch() {
+      if(locked.isVisible()){
+        locked.setVisible(false);
+      }
         if (DBConnection.getPassword(Integer.parseInt(userID.getText()), String.valueOf(passphrase.getPassword()),
                 "hr") == false) {
             incorrect.setVisible(true);
@@ -74,11 +81,23 @@ public class LoginScreen extends JFrame {
     }
 
     public Boolean EMPPasswordMatch() {
-        if (DBConnection.getPassword(Integer.parseInt(userID.getText()), String.valueOf(passphrase.getPassword()),
+      if(DBConnection.retrieveFailedAttempts(Integer.parseInt(userID.getText()))>=3){
+        if(incorrect.isVisible()){
+          incorrect.setVisible(false);
+        }
+        locked.setVisible(true);
+        return false;
+      }
+       else if (DBConnection.getPassword(Integer.parseInt(userID.getText()), String.valueOf(passphrase.getPassword()),
                 "employee") == false) {
+            if (locked.isVisible()){
+              locked.setVisible(false);
+            }
+            DBConnection.incrementFailedAttempts(Integer.parseInt(userID.getText()))
             incorrect.setVisible(true);
             return false;
         } else {
+            locked.setVisible(false);
             incorrect.setVisible(false);
             return true;
         }
