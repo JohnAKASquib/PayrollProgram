@@ -38,6 +38,58 @@ public class DBConnection {
 		return false;
 	}
 
+	public static int retrieveFailedAttempts(int id) throws SQLException {
+		try {
+			connection = DriverManager.getConnection(url, user, pass);
+			System.out.println("Connected to " + databaseName);
+			String sql = "SELECT failedattempts FROM employee WHERE IDNumber=" + Integer.toString(id);
+			Statement statement = connection.createStatement();
+			ResultSet res = statement.executeQuery(sql);
+			res.next();
+			return res.getInt(1);
+		} catch (SQLException e) {
+			System.out.println("Error retrieving failedattempts");
+			e.printStackTrace();
+			throw e;
+		} finally {
+			connection.close();
+		}
+	}
+
+	public static void incrementFailedAttempts(int id) throws SQLException {
+		try {
+			connection = DriverManager.getConnection(url, user, pass);
+			System.out.println("Connected to " + databaseName);
+			String sql = "UPDATE employee SET failedattempts=failedattempts +1 WHERE IDNumber=?";
+			PreparedStatement pstate = connection.prepareStatement(sql);
+			pstate.setInt(1, id);
+			pstate.executeUpdate();
+			pstate.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error incrementing failedattempts");
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	public static void resetFailedAttempts(int id) throws SQLException {
+		try {
+			connection = DriverManager.getConnection(url, user, pass);
+			System.out.println("Connected to " + databaseName);
+			String sql = "UPDATE employee SET failedattempts=0 WHERE IDNumber=?";
+			PreparedStatement pstate = connection.prepareStatement(sql);
+			pstate.setInt(1, id);
+			pstate.executeUpdate();
+			pstate.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error resetting failedattempts");
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
 	public static Boolean addEmployee(Employee emp) {
 		try {
 			connection = DriverManager.getConnection(url, user, pass);
