@@ -17,7 +17,8 @@ CREATE TABLE employee (
   grossIncome int,
   netIncome int,
   BenefitPackage varchar(6),
-  Password varchar(20)
+  Password varchar(20),
+  failedattempts int DEFAULT 0
 );
 -------------------------------------------------------------------------
 CREATE TABLE benefit (
