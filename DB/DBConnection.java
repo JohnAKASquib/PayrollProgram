@@ -15,11 +15,11 @@ public class DBConnection {
 	static String user = "root";
 	static String pass = "root";
 
-	public static Boolean getHRPassword(int IDNo, String enteredPass) {
+	public static Boolean getPassword(int IDNo, String enteredPass, String table) {
 		try {
 			connection = DriverManager.getConnection(url, user, pass);
 			System.out.println("Connected to " + databaseName);
-			String query = "SELECT Password FROM hr WHERE IDNumber=" + Integer.toString(IDNo);
+			String query = "SELECT Password FROM " + table + " WHERE IDNumber=" + Integer.toString(IDNo);
 			Statement statement = connection.createStatement();
 			ResultSet res = statement.executeQuery(query);
 			while (res.next()) {
@@ -280,6 +280,104 @@ public class DBConnection {
 			connection.close();
 		} catch (SQLException e) {
 			System.out.println("Error updating BenefitPackage");
+			throw e;
+		}
+	}
+
+	public static String[] getPay(int id, String inc) throws SQLException {
+		try {
+			String s[] = { "", "", "" };
+			connection = DriverManager.getConnection(url, user, pass);
+			System.out.println("Connected to " + databaseName);
+			String sql = "SELECT " + inc + ", firstname, lastname FROM employee WHERE IDNumber=" + Integer.toString(id);
+			Statement statement = connection.createStatement();
+			ResultSet res = statement.executeQuery(sql);
+			res.next();
+			s[0] = Integer.toString(res.getInt(1));
+			s[1] = res.getString(2);
+			s[2] = res.getString(3);
+			return s;
+		} catch (SQLException e) {
+			System.out.println("Error retrieving Pay from DB");
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	public static void updatePay(int id, int gross) throws SQLException {
+		try {
+			connection = DriverManager.getConnection(url, user, pass);
+			System.out.println("Connected to " + databaseName);
+			String sql = "UPDATE employee set grossIncome=? WHERE IDNumber=?";
+			PreparedStatement pstate = connection.prepareStatement(sql);
+			pstate.setInt(1, gross);
+			pstate.setInt(2, id);
+			pstate.executeUpdate();
+			pstate.close();
+			updateNetPay(id);
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error Updating Pay");
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	private static void updateNetPay(int id) throws SQLException {
+		int benCost, gross;
+		double net;
+		String arr[];
+		try {
+			String bPackage = getBenefitPackage(id);
+			switch (bPackage) {
+				case "Bronze":
+					benCost = 7000;// 17000;
+					break;
+				case "Silver":
+					benCost = 11000;// 35700;
+					break;
+				case "Gold":
+					benCost = 20000;// 67700;
+					break;
+				case "NULL":
+					benCost = 0;
+					break;
+				default:
+					benCost = 0;
+			}
+			arr = getPay(id, "grossIncome");
+			gross = Integer.parseInt(arr[0]);
+			net = gross - benCost;
+			net = net - (net * .3);
+			if (net < 0)
+				net = 0;
+			connection = DriverManager.getConnection(url, user, pass);
+			String query = "UPDATE employee set netIncome=? WHERE IDNumber=?";
+			PreparedStatement pstate = connection.prepareStatement(query);
+			pstate.setInt(1, (int) net);
+			pstate.setInt(2, id);
+			pstate.executeUpdate();
+			pstate.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error updating Net Income");
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	private static String getBenefitPackage(int id) throws SQLException {
+		try {
+			connection = DriverManager.getConnection(url, user, pass);
+			System.out.println("Connected to " + databaseName);
+			String query = "SELECT BenefitPackage FROM employee WHERE IDNumber=" + Integer.toString(id);
+			Statement statement = connection.createStatement();
+			ResultSet res = statement.executeQuery(query);
+			res.next();
+			return res.getString(1);
+		} catch (SQLException e) {
+			System.out.println("Error retrieving BenefitPackage");
+			e.printStackTrace();
 			throw e;
 		}
 	}

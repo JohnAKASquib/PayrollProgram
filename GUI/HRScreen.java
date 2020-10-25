@@ -12,6 +12,7 @@ import GUI.Panels.*;
 
 public class HRScreen extends JFrame implements ActionListener {
 	static int IDNoBeforeChange;
+	boolean employeeIn;
 	CardLayout card = new CardLayout();
 	static JCheckBox box;
 	static ConfirmDialog cd;
@@ -20,6 +21,9 @@ public class HRScreen extends JFrame implements ActionListener {
 	SearchDialog sd;
 	DeleteDialog dd;
 	BenefitPanel empBenefitsView;
+	TaxInfoPanel taxInfoView;
+	GrossPanel grossView;
+	NetPanel netView;
 	JPanel left, top, center, empInfoView;
 	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, VIEW, DELETE, logout;
 	JLabel fn, ln, ss, addr, dob, homephone, mobphone, email, employedsince, idNo, hoursworked, pass, fulltime;
@@ -65,6 +69,9 @@ public class HRScreen extends JFrame implements ActionListener {
 	private void addActionListeners() {
 		empInfo.addActionListener(this);
 		empBenefits.addActionListener(this);
+		empTax.addActionListener(this);
+		empGross.addActionListener(this);
+		empNet.addActionListener(this);
 		ADD.addActionListener(this);
 		UPDATE.addActionListener(this);
 		VIEW.addActionListener(this);
@@ -147,14 +154,32 @@ public class HRScreen extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
-		// as we add more panels to center, this function will need to be updated to
-		// switch between them
+
 		if (source == this.empInfo) {
+			if (employeeIn)
+				UPDATE.setEnabled(true);
 			choice.setText(empInfo.getText());
 			card.show(center, "Emp Info");
 		} else if (source == this.empBenefits) {
+			if (employeeIn)
+				UPDATE.setEnabled(false);
 			choice.setText(empBenefits.getText());
 			card.show(center, "Emp Benefits");
+		} else if (source == this.empTax) {
+			if (employeeIn)
+				UPDATE.setEnabled(false);
+			choice.setText(empTax.getText());
+			card.show(center, "Emp Tax");
+		} else if (source == this.empGross) {
+			if (employeeIn)
+				UPDATE.setEnabled(false);
+			choice.setText(empGross.getText());
+			card.show(center, "Emp Gross");
+		} else if (source == this.empNet) {
+			if (employeeIn)
+				UPDATE.setEnabled(false);
+			choice.setText(empNet.getText());
+			card.show(center, "Emp Net");
 		} else if (source == this.ADD) {
 			if (choice.getText() == "Employee Info") {
 				addEmployee();
@@ -164,9 +189,12 @@ public class HRScreen extends JFrame implements ActionListener {
 				wd.makeVisible(Integer.toString(IDNoBeforeChange));
 			} else if (choice.getText() == "Employee Benefits") {
 				wd.makeVisible();
+			} else if (choice.getText() == "Employee Gross Pay") {
+				wd.makeVisible(2);
 			}
 		} else if (source == this.VIEW) {
-			if (choice.getText() == "Employee Info" || choice.getText() == "Employee Benefits") {
+			if (choice.getText() == "Employee Info" || choice.getText() == "Employee Benefits"
+					|| choice.getText() == "Employee Gross Pay") {
 				sd.makeVisible();
 			}
 		} else if (source == this.DELETE) {
@@ -211,6 +239,9 @@ public class HRScreen extends JFrame implements ActionListener {
 		// other panels have no specific layout manager, they will be added to center
 		empInfoView = new JPanel(null);
 		empBenefitsView = new BenefitPanel();
+		taxInfoView = new TaxInfoPanel();
+		grossView = new GrossPanel();
+		netView = new NetPanel();
 	}
 
 	private void setupButtons() {
@@ -296,6 +327,9 @@ public class HRScreen extends JFrame implements ActionListener {
 		// add content panels to center
 		center.add(empInfoView, "Emp Info");
 		center.add(empBenefitsView, "Emp Benefits");
+		center.add(taxInfoView, "Emp Tax");
+		center.add(grossView, "Emp Gross");
+		center.add(netView, "Emp Net");
 	}
 
 	private void addToEmpInfo() {
@@ -357,7 +391,28 @@ public class HRScreen extends JFrame implements ActionListener {
 		box.setBounds(410, 515, 50, 50);
 	}
 
+	public void clearFields() {
+		firstname.setText(null);
+		lastname.setText(null);
+		socialsec.setText(null);
+		address.setText(null);
+		DOB.setText(null);
+		homeNo.setText(null);
+		mobileNo.setText(null);
+		emailAddress.setText(null);
+		dateStarted.setText(null);
+		IDNumber.setText(null);
+		hoursWorkedLastPayPeriod.setText(null);
+		password.setText(null);
+		if (box.isSelected())
+			box.doClick();
+		empBenefitsView.resetFields();
+		grossView.resetFields();
+		netView.resetFields();
+	}
+
 	public void empLoggedIn() {
+		employeeIn = true;
 		firstname.setEditable(false);
 		lastname.setEditable(false);
 		socialsec.setEditable(false);
@@ -366,10 +421,14 @@ public class HRScreen extends JFrame implements ActionListener {
 		IDNumber.setEditable(false);
 		hoursWorkedLastPayPeriod.setEditable(false);
 		box.setEnabled(false);
+		GrossPanel.disableIncomeEditing();
+		ADD.setEnabled(false);
+		DELETE.setEnabled(false);
 	}
 
 	public void empLoggedOut() {
-		if (!firstname.isEditable()) {
+		if (employeeIn) {
+			employeeIn = false;
 			firstname.setEditable(true);
 			lastname.setEditable(true);
 			socialsec.setEditable(true);
@@ -378,6 +437,9 @@ public class HRScreen extends JFrame implements ActionListener {
 			IDNumber.setEditable(true);
 			hoursWorkedLastPayPeriod.setEditable(true);
 			box.setEnabled(true);
+			GrossPanel.enableIncomeEditing();
+			ADD.setEnabled(true);
+			DELETE.setEnabled(true);
 		} else
 			return;
 	}

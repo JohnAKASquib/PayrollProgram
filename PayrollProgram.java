@@ -34,6 +34,15 @@ public class PayrollProgram implements ActionListener {
         }
     }
 
+    private void EMPLogin() {
+        if (logscreen.EMPPasswordMatch() == true) {
+            logscreen.setVisible(false);
+            screen.setVisible(true);
+            screen.empLoggedIn();
+        } else
+            return;
+    }
+
     private void HRLogin() {
         if (logscreen.HRPasswordMatch() == true) {
             logscreen.setVisible(false);
@@ -45,9 +54,7 @@ public class PayrollProgram implements ActionListener {
 
     public void login(boolean employee) {
         if (employee == true) {
-            logscreen.setVisible(false);
-            screen.setVisible(true);
-            screen.empLoggedIn();
+            EMPLogin();
         } else {
             HRLogin();
         }
@@ -59,6 +66,7 @@ public class PayrollProgram implements ActionListener {
         logscreen.setVisible(true);
         screen.setVisible(false);
         screen.empLoggedOut();
+        screen.clearFields();
     }
 
     public static void main(String[] args) {

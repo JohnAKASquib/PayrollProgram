@@ -47,8 +47,8 @@ public class BenefitPanel extends JPanel implements ActionListener {
 
     private void setBoundsForAll() {
         employee.setBounds(275, 50, 110, 25);
-        fn.setBounds(425, 57, 150, 15);
-        ln.setBounds(500, 57, 150, 15);
+        fn.setBounds(425, 50, 150, 25);
+        ln.setBounds(500, 50, 150, 25);
         id.setBounds(600, 57, 250, 15);
         current.setBounds(350, 100, 200, 25);
         pack.setBounds(525, 100, 150, 25);
@@ -69,6 +69,13 @@ public class BenefitPanel extends JPanel implements ActionListener {
         if (source == this.details) {
             switchTable();
         }
+    }
+
+    public void resetFields() {
+        id.setText("No ID Selected");
+        fn.setText("N/A");
+        ln.setText("N/A");
+        pack.setText("None");
     }
 
     public static void removeBenefits() {
@@ -180,9 +187,6 @@ public class BenefitPanel extends JPanel implements ActionListener {
         goldPackage = new JTable(goldInfo, columnNames);
         silverPackage = new JTable(silverInfo, columnNames);
         bronzePackage = new JTable(bronzeInfo, columnNames);
-        goldPackage.setCellSelectionEnabled(false);
-        silverPackage.setCellSelectionEnabled(false);
-        bronzePackage.setCellSelectionEnabled(false);
         goldPackage.setVisible(false);
         silverPackage.setVisible(false);
         bronzePackage.setVisible(true);
