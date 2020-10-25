@@ -19,13 +19,14 @@ public class HRScreen extends JFrame implements ActionListener {
 	static WarningDialog wd;
 	static ErrorDialog ed;
 	SearchDialog sd;
+	UnlockDialog ud;
 	DeleteDialog dd;
 	BenefitPanel empBenefitsView;
 	TaxInfoPanel taxInfoView;
 	GrossPanel grossView;
 	NetPanel netView;
 	JPanel left, top, center, empInfoView;
-	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, VIEW, DELETE, logout;
+	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, VIEW, DELETE, UNLOCK, logout;
 	JLabel fn, ln, ss, addr, dob, homephone, mobphone, email, employedsince, idNo, hoursworked, pass, fulltime;
 	JLabel current;
 	static JLabel choice;
@@ -76,6 +77,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		UPDATE.addActionListener(this);
 		VIEW.addActionListener(this);
 		DELETE.addActionListener(this);
+		UNLOCK.addActionListener(this);
 	}
 
 	private static Employee getEmpFromTextFields() throws NumberFormatException {
@@ -203,6 +205,8 @@ public class HRScreen extends JFrame implements ActionListener {
 			} else if (choice.getText() == "Employee Benefits") {
 				wd.makeVisible(1);
 			}
+		} else if (source == this.UNLOCK) {
+			ud.makeVisible();
 		}
 	}
 
@@ -212,11 +216,13 @@ public class HRScreen extends JFrame implements ActionListener {
 		cd = new ConfirmDialog();
 		dd = new DeleteDialog();
 		wd = new WarningDialog();
+		ud = new UnlockDialog();
 		sd.setVisible(false);
 		cd.setVisible(false);
 		ed.setVisible(false);
 		dd.setVisible(false);
 		wd.setVisible(false);
+		ud.setVisible(false);
 	}
 
 	private void setupFrame() {
@@ -255,6 +261,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		UPDATE = new JButton("UPDATE");
 		VIEW = new JButton("VIEW");
 		DELETE = new JButton("DELETE");
+		UNLOCK = new JButton("UNLOCK");
 		logout = new JButton("LOGOUT");
 	}
 
@@ -321,6 +328,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		left.add(UPDATE);
 		left.add(VIEW);
 		left.add(DELETE);
+		left.add(UNLOCK);
 	}
 
 	private void addToCenter() {
@@ -424,6 +432,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		GrossPanel.disableIncomeEditing();
 		ADD.setEnabled(false);
 		DELETE.setEnabled(false);
+		UNLOCK.setVisible(false);
 	}
 
 	public void empLoggedOut() {
@@ -440,6 +449,7 @@ public class HRScreen extends JFrame implements ActionListener {
 			GrossPanel.enableIncomeEditing();
 			ADD.setEnabled(true);
 			DELETE.setEnabled(true);
+			UNLOCK.setVisible(true);
 		} else
 			return;
 	}
