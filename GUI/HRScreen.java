@@ -12,7 +12,7 @@ import GUI.Panels.*;
 
 public class HRScreen extends JFrame implements ActionListener {
 	static int IDNoBeforeChange;
-	boolean employeeIn;
+	static boolean employeeIn;
 	CardLayout card = new CardLayout();
 	static JCheckBox box;
 	static ConfirmDialog cd;
@@ -26,7 +26,7 @@ public class HRScreen extends JFrame implements ActionListener {
 	GrossPanel grossView;
 	NetPanel netView;
 	JPanel left, top, center, empInfoView;
-	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, VIEW, DELETE, UNLOCK, logout;
+	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, VIEW, DELETE, UNLOCK, CLEAR, logout;
 	JLabel fn, ln, ss, addr, dob, homephone, mobphone, email, employedsince, idNo, hoursworked, pass, fulltime;
 	JLabel current;
 	static JLabel choice;
@@ -77,6 +77,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		UPDATE.addActionListener(this);
 		VIEW.addActionListener(this);
 		DELETE.addActionListener(this);
+		CLEAR.addActionListener(this);
 		UNLOCK.addActionListener(this);
 	}
 
@@ -122,10 +123,14 @@ public class HRScreen extends JFrame implements ActionListener {
 			IDNoBeforeChange = temp.getIDNumber();// this is used to prevent the user from causing bugs
 			hoursWorkedLastPayPeriod.setText(String.valueOf(temp.getHoursWorkedLastPayPeriod()));
 			password.setText(temp.getPassword());
+			if (employeeIn)
+				box.setEnabled(true);
 			if (temp.isFullTime() && !box.isSelected())
 				box.doClick();
 			else if (!temp.isFullTime() && box.isSelected())
 				box.doClick();
+			if (employeeIn)
+				box.setEnabled(false);
 			cd.makeVisible();
 		} catch (SQLException e) {
 			ed.makeVisible("Error: Could not find employee with that ID");
@@ -205,6 +210,8 @@ public class HRScreen extends JFrame implements ActionListener {
 			} else if (choice.getText() == "Employee Benefits") {
 				wd.makeVisible(1);
 			}
+		} else if (source == this.CLEAR) {
+			clearFields();
 		} else if (source == this.UNLOCK) {
 			ud.makeVisible();
 		}
@@ -261,6 +268,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		UPDATE = new JButton("UPDATE");
 		VIEW = new JButton("VIEW");
 		DELETE = new JButton("DELETE");
+		CLEAR = new JButton("CLEAR");
 		UNLOCK = new JButton("UNLOCK");
 		logout = new JButton("LOGOUT");
 	}
@@ -328,6 +336,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		left.add(UPDATE);
 		left.add(VIEW);
 		left.add(DELETE);
+		left.add(CLEAR);
 		left.add(UNLOCK);
 	}
 
@@ -412,8 +421,13 @@ public class HRScreen extends JFrame implements ActionListener {
 		IDNumber.setText(null);
 		hoursWorkedLastPayPeriod.setText(null);
 		password.setText(null);
-		if (box.isSelected())
+		if (box.isSelected()) {
+			if (employeeIn)
+				box.setEnabled(true);
 			box.doClick();
+			if (employeeIn)
+				box.setEnabled(false);
+		}
 		empBenefitsView.resetFields();
 		grossView.resetFields();
 		netView.resetFields();
