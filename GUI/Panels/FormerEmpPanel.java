@@ -47,6 +47,7 @@ public class FormerEmpPanel extends JPanel implements ActionListener {
         mobile = new JTextField();
         reason = new JTextField();
         reason.setEditable(false);
+        idNo.setEditable(false);
     }
 
     private void setupComboBoxAndButton() {
@@ -89,6 +90,26 @@ public class FormerEmpPanel extends JPanel implements ActionListener {
         if (source == select) {
             reason.setText(reasons.getItemAt(reasons.getSelectedIndex()).toString());
         }
+    }
+    
+    public static void updateFormerEmployee(){
+      try{
+      FormerEmployee temp = new FormerEmployee();
+      temp.setFirstName(fn.getText());
+      temp.setLastName(ln.getText());
+      temp.setIDNumber(Integer.parseInt(idNo.getText()));
+      temp.setEmployedSince(hired.getText());
+      temp.setDateLeft(left.getText());
+      temp.setAddress(addr.getText());
+      temp.setEmailAddress(email.getText());
+      temp.setMobilePhoneNumber(mobile.getText());
+      temp.setReasonForLeaving(reason.getText());
+      FormerEmpConnection.updateFormerEmployee(temp, temp.getIDNumber());
+      HRScreen.getCD().makeVisible();
+      } catch (SQLException e){
+        HRScreen.getED().makeVisible("Error updating former employee");
+        e.printStackTrace();
+      }
     }
 
     public static void retrieveFormerEmployee(int id) {

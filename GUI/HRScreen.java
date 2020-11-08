@@ -203,6 +203,8 @@ public class HRScreen extends JFrame implements ActionListener {
 				wd.makeVisible();
 			} else if (choice.getText() == "Employee Gross Pay") {
 				wd.makeVisible(2);
+			} else if (choice.getText()=="Former Employees"){
+			  wd.makeVisible(3);
 			}
 		} else if (source == this.VIEW) {
 			sd.makeVisible();

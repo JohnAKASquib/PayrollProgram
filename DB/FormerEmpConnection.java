@@ -76,4 +76,55 @@ public class FormerEmpConnection {
 			throw e;
 		}
 	}
+public static void updateFormerEmployee(FormerEmployee fe, int id) throws SQLException{
+  try{
+    connection = DriverManager.getConnection(url, user, pass);
+    System.out.println("Connected to " + databaseName);
+			// retrieve the right info from DB
+			String query = "SELECT * FROM formeremployee WHERE IDNumber=" + Integer.toString(id);
+			Statement statement = connection.createStatement();
+			ResultSet res = statement.executeQuery(query);
+			res.next();
+			//check each attribute to see if its different and update it with a SQL command if it is
+			if (!(fe.getFirstName() == res.getString(2))) {
+				updateAttribute("firstname", fe.getFirstName(), res.getInt(1));
+			}
+			if (!(fe.getLastName() == res.getString(3))) {
+				updateAttribute("lastname", fe.getLastName(), res.getInt(1));
+			}
+			if  (!(fe.getEmployedSince()==res.getString(4))) {
+			  updateAttribute("datehired",fe.getEmployedSince(),res.getInt(1));
+			}
+			if  (!(fe.getDateLeft()==res.getString(5))){
+			  updateAttribute("dateleft", fe.getDateLeft(), res.getInt(1));
+			}
+			if  (!(fe.getAddress()==res.getString(6))){
+			  updateAttribute("address", fe.getAddress(), res.getInt(1));
+			}
+			if (!(fe.getEmailAddress()==res.getString(7))){
+			  updateAttribute("emailAddress", fe.getEmailAddress(), res.getInt(1));
+			}
+			if  (!(fe.getMobilePhoneNumber()==res.getString(8))){
+			  updateAttribute("MobilePhoneNumber", fe.getMobilePhoneNumber(), res.getInt(1));
+			}
+			if (!(fe.getReasonForLeaving==res.getString(9))){
+			  updateAttribute("reasonforleaving", fe.getReasonForLeaving(), res.getInt(1));
+			}
+  }
+}
+private void updateAttribute(String attr, String updated, int id){
+  try {
+			connection = DriverManager.getConnection(url, user, pass);
+			String sql = "UPDATE formeremployee set " + attr + "=? WHERE IDNumber=?";
+			PreparedStatement pstate = connection.prepareStatement(sql);
+			pstate.setString(1, updated);
+			pstate.setInt(2, id);
+			pstate.executeUpdate();
+			pstate.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error updating attribute");
+			e.printStackTrace();
+		}
+  }
 }

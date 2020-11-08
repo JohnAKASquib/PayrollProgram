@@ -14,6 +14,7 @@ public class WarningDialog extends JFrame implements ActionListener {
     String updateEmp = "Are you sure you want to overwrite user ID: ",
             updateBen = "Update the Benefit Package for this Employee?", removeBen = "Remove this employee's benefits?",
             updatePay = "Update this employee's pay?";
+            updateFormer="Update info for this former employee?";
 
     public WarningDialog() {
         wd = new JDialog(this, "WARNING", true);
@@ -53,6 +54,8 @@ public class WarningDialog extends JFrame implements ActionListener {
             sure.setText(removeBen);
         else if (code == 2)
             sure.setText(updatePay);
+        else if (code==3)
+            sure.setText(updateFormer);
         id.setText(null);
         wd.setVisible(true);
     }
@@ -74,6 +77,8 @@ public class WarningDialog extends JFrame implements ActionListener {
                 BenefitPanel.removeBenefits();
             } else if (sure.getText() == updatePay) {
                 GrossPanel.updatePay();
+            } else if (sure.getText() == updateFormer){
+              FormerEmpPanel.updateFormerEmployee();
             }
         } else if (source == cancel) {
             makeNotVisible();
