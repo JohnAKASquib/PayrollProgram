@@ -25,8 +25,9 @@ public class HRScreen extends JFrame implements ActionListener {
 	TaxInfoPanel taxInfoView;
 	GrossPanel grossView;
 	NetPanel netView;
+	FormerEmpPanel formerEmpView;
 	JPanel left, top, center, empInfoView;
-	JButton empInfo, empBenefits, empTax, empGross, empNet, ADD, UPDATE, VIEW, DELETE, UNLOCK, CLEAR, logout;
+	JButton empInfo, empBenefits, empTax, empGross, empNet, formerEmp, ADD, UPDATE, VIEW, DELETE, UNLOCK, CLEAR, logout;
 	JLabel fn, ln, ss, addr, dob, homephone, mobphone, email, employedsince, idNo, hoursworked, pass, fulltime;
 	JLabel current;
 	static JLabel choice;
@@ -73,6 +74,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		empTax.addActionListener(this);
 		empGross.addActionListener(this);
 		empNet.addActionListener(this);
+		formerEmp.addActionListener(this);
 		ADD.addActionListener(this);
 		UPDATE.addActionListener(this);
 		VIEW.addActionListener(this);
@@ -187,7 +189,14 @@ public class HRScreen extends JFrame implements ActionListener {
 				UPDATE.setEnabled(false);
 			choice.setText(empNet.getText());
 			card.show(center, "Emp Net");
-		} else if (source == this.ADD) {
+		} else if (source == this.formerEmp){
+		  if (employeeIn){
+		    UPDATE.setEnabled(false);
+		  }
+		  choice.setText(formerEmp.getText());
+		  card.show(center, "Former Emp");
+		}
+		else if (source == this.ADD) {
 			if (choice.getText() == "Employee Info") {
 				addEmployee();
 			}
@@ -255,6 +264,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		taxInfoView = new TaxInfoPanel();
 		grossView = new GrossPanel();
 		netView = new NetPanel();
+		formerEmpView = new FormerEmpPanel();
 	}
 
 	private void setupButtons() {
@@ -264,6 +274,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		empTax = new JButton("Employee Tax Info");
 		empGross = new JButton("Employee Gross Pay");
 		empNet = new JButton("Employee Net Pay");
+		formerEmp = new JButton("Former Employees");
 		ADD = new JButton("ADD");
 		UPDATE = new JButton("UPDATE");
 		VIEW = new JButton("VIEW");
@@ -328,6 +339,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		top.add(empTax);
 		top.add(empGross);
 		top.add(empNet);
+		top.add(formerEmp);
 	}
 
 	private void addToLeft() {
@@ -347,6 +359,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		center.add(taxInfoView, "Emp Tax");
 		center.add(grossView, "Emp Gross");
 		center.add(netView, "Emp Net");
+		center.add(formerEmpView, "Former Emp");
 	}
 
 	private void addToEmpInfo() {
@@ -443,6 +456,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		IDNumber.setEditable(false);
 		hoursWorkedLastPayPeriod.setEditable(false);
 		box.setEnabled(false);
+		formerEmp.setVisible(false);
 		GrossPanel.disableIncomeEditing();
 		ADD.setEnabled(false);
 		DELETE.setEnabled(false);
@@ -460,6 +474,7 @@ public class HRScreen extends JFrame implements ActionListener {
 			IDNumber.setEditable(true);
 			hoursWorkedLastPayPeriod.setEditable(true);
 			box.setEnabled(true);
+			formerEmp.setVisible(true);
 			GrossPanel.enableIncomeEditing();
 			ADD.setEnabled(true);
 			DELETE.setEnabled(true);

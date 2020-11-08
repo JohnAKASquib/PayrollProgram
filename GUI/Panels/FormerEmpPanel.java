@@ -111,4 +111,6 @@ public class FormerEmpPanel extends JPanel implements ActionListener {
         add(reasons);
         add(select);
     }
+    
+    
 }
