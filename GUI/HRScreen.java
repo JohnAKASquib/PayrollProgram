@@ -189,14 +189,10 @@ public class HRScreen extends JFrame implements ActionListener {
 				UPDATE.setEnabled(false);
 			choice.setText(empNet.getText());
 			card.show(center, "Emp Net");
-		} else if (source == this.formerEmp){
-		  if (employeeIn){
-		    UPDATE.setEnabled(false);
-		  }
-		  choice.setText(formerEmp.getText());
-		  card.show(center, "Former Emp");
-		}
-		else if (source == this.ADD) {
+		} else if (source == this.formerEmp) {
+			choice.setText(formerEmp.getText());
+			card.show(center, "Former Emp");
+		} else if (source == this.ADD) {
 			if (choice.getText() == "Employee Info") {
 				addEmployee();
 			}
@@ -209,10 +205,7 @@ public class HRScreen extends JFrame implements ActionListener {
 				wd.makeVisible(2);
 			}
 		} else if (source == this.VIEW) {
-			if (choice.getText() == "Employee Info" || choice.getText() == "Employee Benefits"
-					|| choice.getText() == "Employee Gross Pay") {
-				sd.makeVisible();
-			}
+			sd.makeVisible();
 		} else if (source == this.DELETE) {
 			if (choice.getText() == "Employee Info") {
 				dd.makeVisible();
@@ -444,6 +437,7 @@ public class HRScreen extends JFrame implements ActionListener {
 		empBenefitsView.resetFields();
 		grossView.resetFields();
 		netView.resetFields();
+		formerEmpView.resetFields();
 	}
 
 	public void empLoggedIn() {

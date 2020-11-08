@@ -1,16 +1,21 @@
 package GUI.Panels;
 
 import javax.swing.*;
+import GUI.HRScreen;
 import java.awt.event.*;
+import java.sql.SQLException;
+import DB.FormerEmpConnection;
+import Classes.*;
 
 public class FormerEmpPanel extends JPanel implements ActionListener {
     JLabel firstname, lastname, idNumber, dateHired, dateLeft, address, emailaddress, mobPhone, reasonForLeaving;
-    JTextField fn, ln, idNo, hired, left, addr, email, mobile, reason;
+    static JTextField fn, ln, idNo, hired, left, addr, email, mobile, reason;
     JButton select;
     JComboBox reasons;
     String reasonsWhy[] = { "TERMINATED", "QUIT", "DECEASED", "DISABLED" };
 
     public FormerEmpPanel() {
+        setLayout(null);
         setupLabels();
         setupTextFields();
         setupComboBoxAndButton();
@@ -68,7 +73,7 @@ public class FormerEmpPanel extends JPanel implements ActionListener {
         left.setBounds(410, 210, 160, 22);
         addr.setBounds(410, 250, 160, 22);
         email.setBounds(410, 290, 160, 22);
-        mobPhone.setBounds(410, 330, 160, 22);
+        mobile.setBounds(410, 330, 160, 22);
         reason.setBounds(410, 370, 160, 22);
         // combo box with button
         reasons.setBounds(580, 370, 195, 30);
@@ -84,6 +89,36 @@ public class FormerEmpPanel extends JPanel implements ActionListener {
         if (source == select) {
             reason.setText(reasons.getItemAt(reasons.getSelectedIndex()).toString());
         }
+    }
+
+    public static void retrieveFormerEmployee(int id) {
+        try {
+            FormerEmployee temp = FormerEmpConnection.getFormerEmployee(id);
+            fn.setText(temp.getFirstName());
+            ln.setText(temp.getLastName());
+            idNo.setText(String.valueOf(temp.getIDNumber()));
+            hired.setText(temp.getEmployedSince());
+            left.setText(temp.getDateLeft());
+            addr.setText(temp.getAddress());
+            email.setText(temp.getEmailAddress());
+            mobile.setText(temp.getMobilePhoneNumber());
+            reason.setText(temp.getReasonForLeaving());
+        } catch (SQLException e) {
+            HRScreen.getED().makeVisible("Error retrieving former employee");
+            e.printStackTrace();
+        }
+    }
+
+    public void resetFields() {
+        fn.setText(null);
+        ln.setText(null);
+        idNo.setText(null);
+        hired.setText(null);
+        left.setText(null);
+        addr.setText(null);
+        email.setText(null);
+        mobile.setText(null);
+        reason.setText(null);
     }
 
     private void addToThis() {
@@ -111,6 +146,5 @@ public class FormerEmpPanel extends JPanel implements ActionListener {
         add(reasons);
         add(select);
     }
-    
-    
+
 }
