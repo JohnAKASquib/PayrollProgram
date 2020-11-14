@@ -46,10 +46,10 @@ public class BenefitPanel extends JPanel implements ActionListener {
     }
 
     private void setBoundsForAll() {
-        employee.setBounds(275, 50, 110, 25);
-        fn.setBounds(425, 50, 150, 25);
-        ln.setBounds(500, 50, 150, 25);
-        id.setBounds(600, 57, 250, 15);
+        employee.setBounds(100, 50, 110, 25);
+        fn.setBounds(325, 50, 150, 25);
+        ln.setBounds(460, 50, 150, 25);
+        id.setBounds(700, 57, 250, 15);
         current.setBounds(350, 100, 200, 25);
         pack.setBounds(525, 100, 150, 25);
         options.setBounds(290, 150, 150, 25);
@@ -131,7 +131,11 @@ public class BenefitPanel extends JPanel implements ActionListener {
 
         } catch (SQLException e) {
             System.out.println("Error when retrieving benefit package");
+            HRScreen.getED().makeVisible("Error retrieving benefit package");
             throw e;
+        } catch (NullPointerException e) {
+            pack.setText("None");
+            pack.setForeground(Color.BLACK);
         }
     }
 
