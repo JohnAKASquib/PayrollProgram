@@ -8,7 +8,7 @@ import DB.DBConnection;
 
 public class NetPanel extends JPanel {
     static JLabel name, id;
-    JLabel info, dollar;
+    JLabel info, dollar, benPack, pack, packDeduction, taxes,fed,state,loc,med,socsec,fedTax,stateTax,locTax,medTax,socsecTax;
     static JTextField income;
     String Net = "Net Income cannot be edited, it will be updated when Gross Income is.";
 
@@ -34,6 +34,20 @@ public class NetPanel extends JPanel {
         dollar = new JLabel("$");
         dollar.setFont(f);
         info = new JLabel(Net);
+        benPack=new JLabel("Benefit Package: ");
+        pack=new JLabel("None");
+        packDeduction=new JLabel("$0");
+        taxes=new JLabel("NYC Taxes");
+        fed=new JLabel("Federal Tax: ");
+        state=new JLabel("State Tax: ");
+        loc=new JLabel("Local Tax: ");
+        med=new JLabel("Medicare: ");
+        socsec=new JLabel("Social Security: ");
+        fedTax=new JLabel("$");
+        stateTax=new JLabel("$");
+        locTax=new JLabel("$");
+        medTax=new JLabel("$");
+        socsecTax=new JLabel("$");
     }
 
     private void setupTextFields() {
