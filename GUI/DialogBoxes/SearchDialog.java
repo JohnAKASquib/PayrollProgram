@@ -40,9 +40,10 @@ public class SearchDialog extends JFrame implements ActionListener {
                     FormerEmpPanel.retrieveFormerEmployee(Integer.parseInt(idfield.getText()));
                 } else if (HRScreen.getChoice().getText() == "Employee Benefits") {
                     BenefitPanel.getBenefit(Integer.parseInt(idfield.getText()));
-                } else if (HRScreen.getChoice().getText() == "Employee Gross Pay") {
-                    GrossPanel.getGrossPay(Integer.parseInt(idfield.getText()));
+                } else if (HRScreen.getChoice().getText() == "Employee Gross Pay"
+                        || HRScreen.getChoice().getText() == "Employee Net Pay") {
                     NetPanel.getNetPay(Integer.parseInt(idfield.getText()));
+                    GrossPanel.getGrossPay(Integer.parseInt(idfield.getText()));
                 } else if (HRScreen.getChoice().getText() == "Other Employees") {
                     OtherEmpsPanel.retrieveOtherEmployee(Integer.parseInt(idfield.getText()));
                 } else {
