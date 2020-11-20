@@ -27,6 +27,13 @@ public class NetPanel extends JPanel {
         name.setText("N/A");
         id.setText("N/A");
         income.setText(null);
+        pack.setText("None");
+        packDeduction.setText("$0");
+        fedTax.setText("$0");
+        stateTax.setText("$0");
+        locTax.setText("$0");
+        medTax.setText("$0");
+        socsecTax.setText("$0");
     }
 
     private void setupLabels() {
