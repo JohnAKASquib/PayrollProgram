@@ -1,7 +1,6 @@
 package GUI.Panels;
 
 import java.awt.Color;
-
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 
@@ -23,7 +22,7 @@ public class TaxInfoPanel extends JPanel {
     }
 
     private void setupLabels() {
-        info = new JLabel("*Tax Rate Information for NY State");
+        info = new JLabel("*Tax Rate Information for NY City");
     }
 
     private void setupTable() {
