@@ -38,7 +38,7 @@ public class PayrollProgram implements ActionListener {
         if (logscreen.EMPPasswordMatch() == true) {
             logscreen.setVisible(false);
             screen.setVisible(true);
-            screen.empLoggedIn();
+            screen.empLoggedIn(Integer.parseInt(logscreen.getUserField().getText()));
         } else
             return;
     }

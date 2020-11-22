@@ -84,22 +84,23 @@ public class LoginScreen extends JFrame {
     }
 
     public Boolean EMPPasswordMatch() {
-        try {
+        try {// if the failed attempts are more than 3, display the locked message
             if (DBConnection.retrieveFailedAttempts(Integer.parseInt(userID.getText())) >= 3) {
                 if (incorrect.isVisible()) {
                     incorrect.setVisible(false);
                 }
                 locked.setVisible(true);
                 return false;
-            } else if (DBConnection.getPassword(Integer.parseInt(userID.getText()),
+            } else if (DBConnection.getPassword(Integer.parseInt(userID.getText()), // if its less than 3 but they fail
                     String.valueOf(passphrase.getPassword()), "employee") == false) {
                 if (locked.isVisible()) {
-                    locked.setVisible(false);
-                }
+                    locked.setVisible(false);// inform them of their incorrect input
+                } // and increment failed attempts
                 DBConnection.incrementFailedAttempts(Integer.parseInt(userID.getText()));
                 incorrect.setVisible(true);
                 return false;
-            } else {
+            } else {// otherwise log them in but also reset their failed attempts
+                DBConnection.resetFailedAttempts(Integer.parseInt(userID.getText()));
                 locked.setVisible(false);
                 incorrect.setVisible(false);
                 return true;

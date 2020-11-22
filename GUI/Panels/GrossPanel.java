@@ -51,8 +51,8 @@ public class GrossPanel extends JPanel {
     }
 
     private void setBoundsForAll() {
-        name.setBounds(80, 250, 180, 25);
-        id.setBounds(345, 250, 100, 25);
+        name.setBounds(80, 250, 300, 25);
+        id.setBounds(345, 250, 200, 25);
         info.setBounds(280, 170, 500, 17);
         dollar.setBounds(480, 250, 15, 17);
         income.setBounds(500, 250, 275, 28);

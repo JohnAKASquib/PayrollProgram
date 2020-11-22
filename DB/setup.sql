@@ -20,6 +20,18 @@ CREATE TABLE employee (
   Password varchar(20),
   failedattempts int DEFAULT 0
 );
+-----------------------------------------------------------------------
+CREATE TABLE formeremployee(
+  IDNumber int NOT NULL PRIMARY KEY,
+  firstName varchar(45) NOT NULL,
+  lastName varchar(45) NOT NULL,
+  dateHired varchar(45) NOT NULL,
+  dateLeft varchar(45) NOT NULL,
+  Address varchar(45) NOT NULL,
+  emailAddress varchar(255) NOT NULL,
+  MobilePhoneNumber varchar(45) NOT NULL,
+  reasonforleaving varchar(10) DEFAULT 'TERMINATED' NOT NULL 
+);
 -------------------------------------------------------------------------
 CREATE TABLE benefit (
   BenefitID int NOT NULL auto_increment PRIMARY KEY,

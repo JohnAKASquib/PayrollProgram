@@ -312,6 +312,7 @@ public class DBConnection {
 			pstate.setString(2, Integer.toString(id));
 			pstate.executeUpdate();
 			pstate.close();
+			updateNetPay(id);
 			connection.close();
 		} catch (SQLException e) {
 			System.out.println("Error removing BenefitPackage");
@@ -329,6 +330,7 @@ public class DBConnection {
 			pstate.setInt(2, id);
 			pstate.executeUpdate();
 			pstate.close();
+			updateNetPay(id);
 			connection.close();
 		} catch (SQLException e) {
 			System.out.println("Error updating BenefitPackage");
@@ -383,13 +385,13 @@ public class DBConnection {
 			String bPackage = getBenefitPackage(id);
 			switch (bPackage) {
 				case "Bronze":
-					benCost = 7000;// 17000;
+					benCost = 1200;// 17000;
 					break;
 				case "Silver":
-					benCost = 11000;// 35700;
+					benCost = 4400;// 35700;
 					break;
 				case "Gold":
-					benCost = 20000;// 67700;
+					benCost = 9100;// 67700;
 					break;
 				case "NULL":
 					benCost = 0;
