@@ -22,6 +22,7 @@ abstract public class BenefitsPackage {
 	static Benefit visionCare  = new Benefit("Vision Care", 200, true);
 	
 	
+	
 	public static void main(String[] args) { 
 		
 		
