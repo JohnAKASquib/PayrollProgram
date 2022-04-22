@@ -140,23 +140,24 @@ public class NetPanel extends JPanel {
             // then benefits
             arr = DBConnection.retrieveEmployeeBenPackage(idNo);
             pack.setText(arr[2]);
-            switch (arr[2]) {
-                case "Bronze":
-                    packDeduction.setText("$1200");
-                    break;
-                case "Silver":
-                    packDeduction.setText("$4400");
-                    break;
-                case "Gold":
-                    packDeduction.setText("$9100");
-                    break;
-                case "NULL":
-                    pack.setText("None");
-                    packDeduction.setText("$0");
-                    break;
-                default:
-                    pack.setText("None");
-                    packDeduction.setText("$0");
+            if (arr[2] == null) {
+                pack.setText("None");
+                packDeduction.setText("$0");
+            } else {
+                switch (arr[2]) {
+                    case "Bronze":
+                        packDeduction.setText("$1200");
+                        break;
+                    case "Silver":
+                        packDeduction.setText("$4400");
+                        break;
+                    case "Gold":
+                        packDeduction.setText("$9100");
+                        break;
+                    default:
+                        pack.setText("None");
+                        packDeduction.setText("$0");
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

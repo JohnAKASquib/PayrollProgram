@@ -5,7 +5,7 @@ import java.awt.event.*;
 import java.sql.SQLException;
 
 import DB.*;
-import GUI.Panels.*;
+//import GUI.Panels.*;
 import GUI.HRScreen;
 
 public class UnlockDialog extends JFrame implements ActionListener {

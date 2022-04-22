@@ -241,8 +241,8 @@ public class HRScreen extends JFrame implements ActionListener {
 					break;
 				case "Employee Gross Pay":
 				case "Employee Net Pay":
-					NetPanel.getNetPay(id);
 					GrossPanel.getGrossPay(id);
+					NetPanel.getNetPay(id);
 					break;
 			}
 		} catch (SQLException e) {

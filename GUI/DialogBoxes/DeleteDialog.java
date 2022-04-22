@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 
-import Classes.*;
+// import GUI.Panels.*;
+// import Classes.*;
 import GUI.HRScreen;
-import GUI.Panels.*;
 import DB.FormerEmpConnection;
 
 public class DeleteDialog extends JFrame implements ActionListener {

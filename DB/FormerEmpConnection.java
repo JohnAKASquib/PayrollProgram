@@ -10,14 +10,14 @@ import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.util.Date;
 import Classes.*;
-import DB.DBConnection;
+//import DB.DBConnection;
 
 public class FormerEmpConnection {
 	static Connection connection = null;
 	static String url = "jdbc:mysql://localhost:3306/PayrollProgDB"; // ?useSSL=false"
 	static String databaseName = "PayrollProgDB";
 	static String user = "root";
-	static String pass = "root";
+	static String pass = "DMC51408";
 	static DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
 	public static FormerEmployee getFormerEmployee(int idNo) throws SQLException {

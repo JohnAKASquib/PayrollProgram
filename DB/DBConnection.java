@@ -13,7 +13,7 @@ public class DBConnection {
 	static String url = "jdbc:mysql://localhost:3306/PayrollProgDB"; // ?useSSL=false"
 	static String databaseName = "PayrollProgDB";
 	static String user = "root";
-	static String pass = "root";
+	static String pass = "DMC51408";
 
 	public static Boolean getPassword(int IDNo, String enteredPass, String table) {
 		try {
@@ -383,21 +383,22 @@ public class DBConnection {
 		String arr[];
 		try {
 			String bPackage = getBenefitPackage(id);
-			switch (bPackage) {
-				case "Bronze":
-					benCost = 1200;// 17000;
-					break;
-				case "Silver":
-					benCost = 4400;// 35700;
-					break;
-				case "Gold":
-					benCost = 9100;// 67700;
-					break;
-				case "NULL":
-					benCost = 0;
-					break;
-				default:
-					benCost = 0;
+			if (bPackage == null) {
+				benCost = 0;
+			} else {
+				switch (bPackage) {
+					case "Bronze":
+						benCost = 1200;// 17000;
+						break;
+					case "Silver":
+						benCost = 4400;// 35700;
+						break;
+					case "Gold":
+						benCost = 9100;// 67700;
+						break;
+					default:
+						benCost = 0;
+				}
 			}
 			arr = getPay(id, "grossIncome");
 			gross = Integer.parseInt(arr[0]);
